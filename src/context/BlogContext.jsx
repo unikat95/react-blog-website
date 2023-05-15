@@ -7,14 +7,12 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import Loading from "../components/Loading/Loading";
 
 const BlogContext = createContext();
 
 export const BlogProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true); // ustawienie początkowego stanu na true
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [dataLoaded, setDataLoaded] = useState(false); // stan do śledzenia, czy dane z bazy zostały wczytane
 
   const createUser = async (email, password) => {
     try {
@@ -39,6 +37,7 @@ export const BlogProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       setLoading(false);
+      throw error;
     }
   };
 
@@ -50,6 +49,7 @@ export const BlogProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       setLoading(false);
+      throw error;
     }
   };
 
@@ -70,36 +70,18 @@ export const BlogProvider = ({ children }) => {
       setLoading(false);
     });
 
-    db.collection("users")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-        });
-        setDataLoaded(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
     return () => {
       unsubscribe();
     };
   }, []);
 
-  console.log(loading);
-
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <BlogContext.Provider
-          value={{ createUser, signIn, logout, user, setUser, loading }}
-        >
-          {children}
-        </BlogContext.Provider>
-      )}
+      <BlogContext.Provider
+        value={{ createUser, signIn, logout, user, setUser, loading }}
+      >
+        {children}
+      </BlogContext.Provider>
     </>
   );
 };

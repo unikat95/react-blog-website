@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.active{
+    @apply bg-white text-gray-600 font-medium py-4 px-4;
+}
+
 @layer components {
 
     body {
         background: #f0f0f0;
+        font-family: 'Poppins', sans-serif;
     }
 
     .loading-animation {

@@ -1,34 +1,62 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+
+import { Link, useLocation } from "react-router-dom";
 import BlogContext from "../../context/BlogContext";
 
 export default function Navbar() {
   const { user } = useContext(BlogContext);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    const excludedPaths = ["/account/signin", "/account/signup", "/dashboard"];
+    setShowNavbar(!excludedPaths.includes(location.pathname));
+  }, [location]);
 
   return (
     <>
-      <nav>
-        <ul className="flex gap-5">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          {user && (
-            <li>
-              <Link to="/profile">Profle</Link>
-            </li>
-          )}
-          {!user && (
-            <>
+      {showNavbar && (
+        <nav className="w-full flex justify-center items-center bg-white fixed top-0 left-0 px-5 xl:px-0">
+          <div className="w-full max-w-[1300px] flex justify-between items-center py-5">
+            <div className="flex flex-col">
+              <Link to="/" className="text-xl text-gray-700 font-bold">
+                BlogApp
+              </Link>
+            </div>
+            <ul className="flex gap-10">
               <li>
-                <Link to="/signin">Sign in</Link>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/signup">Sign Up</Link>
+                <Link to="">Articles</Link>
               </li>
-            </>
-          )}
-        </ul>
-      </nav>
+              <li>
+                <Link to="">Users</Link>
+              </li>
+              {user && (
+                <li>
+                  <Link to="/profile">Profle</Link>
+                </li>
+              )}
+              {!user && (
+                <>
+                  <li>
+                    <Link to="account/signin">Account</Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="account/signup"
+                      className="bg-gradient-to-tr from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-md text-sm"
+                    >
+                      Sign Up
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+        </nav>
+      )}
     </>
   );
 }

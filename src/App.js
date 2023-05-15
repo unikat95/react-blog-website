@@ -12,6 +12,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { BlogProvider } from "./context/BlogContext";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
+import Account from "./pages/Account";
 
 function App() {
   const router = createBrowserRouter(
@@ -26,8 +27,11 @@ function App() {
             </ProtectedRoutes>
           }
         />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
+
+        <Route path="account" element={<Account />}>
+          <Route path="signin" element={<Signin />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
       </Route>
     )
   );
