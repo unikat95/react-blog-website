@@ -8,6 +8,7 @@ export default function Signin() {
   const { signIn } = useContext(BlogContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,7 +18,7 @@ export default function Signin() {
       await signIn(email, password);
       navigate("/profile");
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
   };
 
@@ -30,6 +31,8 @@ export default function Signin() {
         setPassword={setPassword}
         value={"Sign In"}
         title={"Account Login"}
+        error={error}
+        setError={setError}
       />
     </>
   );

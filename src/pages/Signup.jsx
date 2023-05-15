@@ -8,16 +8,23 @@ export default function Signup() {
   const { createUser } = useContext(BlogContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      await createUser(email, password);
-      navigate("/profile");
-    } catch (error) {
-      console.log(error);
+    if (password === repeatPassword) {
+      try {
+        await createUser(email, password);
+        navigate("/profile");
+      } catch (error) {
+        console.log(error.code);
+        setError(true);
+      }
+    } else {
+      setError(true);
     }
   };
 
@@ -28,8 +35,11 @@ export default function Signup() {
         handleSubmit={handleSubmit}
         setEmail={setEmail}
         setPassword={setPassword}
+        setRepeatPassword={setRepeatPassword}
         value={"Sign Up"}
         title={"Create account"}
+        error={error}
+        setError={setError}
       />
     </>
   );

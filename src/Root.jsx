@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import Loading from "./components/Loading/Loading";
 import BlogContext from "./context/BlogContext";
 
 export default function Root() {
-  const { loading } = useContext(BlogContext);
-  const [navbarHeight, setNavbarHeight] = useState(0);
+  const { loading, navbarHeight, setNavbarHeight } = useContext(BlogContext);
 
   useEffect(() => {
     const navbar = document.querySelector("nav");

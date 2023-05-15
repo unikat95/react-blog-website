@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import BlogContext from "../../context/BlogContext";
+import { useLocation } from "react-router-dom";
 
 export default function SignForm({
   handleSubmit,
@@ -9,8 +10,12 @@ export default function SignForm({
   setPassword,
   value,
   title,
+  error,
+  setError,
+  setRepeatPassword,
 }) {
   const { loading } = useContext(BlogContext);
+  const location = useLocation();
 
   return (
     <>
@@ -23,16 +28,41 @@ export default function SignForm({
             {title}
           </h1>
           <div className="w-full flex flex-col gap-2">
-            <Input type={"email"} set={setEmail} placeholder={"Email..."} />
+            <Input
+              type={"email"}
+              set={setEmail}
+              placeholder={"Email..."}
+              error={error}
+              setError={setError}
+            />
           </div>
           <div className="w-full flex flex-col gap-2">
             <Input
               type={"password"}
               set={setPassword}
               placeholder={"Password..."}
+              error={error}
+              setError={setError}
             />
           </div>
+          {location.pathname === "/account/signup" && (
+            <div className="w-full flex flex-col gap-2">
+              <Input
+                type={"password"}
+                name={"repeatPassword"}
+                set={setRepeatPassword}
+                placeholder={"Repeat password..."}
+                error={error}
+                setError={setError}
+              />
+            </div>
+          )}
         </div>
+        {error && (
+          <p className="w-full bg-red-400 flex justify-center items-center text-white font-medium text-sm py-2">
+            Wrong email or password!
+          </p>
+        )}
         <Button value={value} />
       </form>
 

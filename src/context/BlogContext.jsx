@@ -13,6 +13,9 @@ const BlogContext = createContext();
 export const BlogProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [navbarHeight, setNavbarHeight] = useState(0);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
 
   const createUser = async (email, password) => {
     try {
@@ -24,6 +27,7 @@ export const BlogProvider = ({ children }) => {
       );
       const userId = userCredential.user.uid;
       const userData = {
+        id: userId,
         firstname: "",
         lastname: "",
         email: email,
@@ -31,6 +35,7 @@ export const BlogProvider = ({ children }) => {
         role: "",
         about: "",
         completed: false,
+        open: false,
       };
       await setDoc(doc(db, "users", userId), userData);
       setLoading(false);
@@ -58,16 +63,27 @@ export const BlogProvider = ({ children }) => {
       setLoading(true);
       await signOut(auth);
       setLoading(false);
+      setShowDropdown(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
   };
 
+  const openDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+  };
+
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      setIsProfileLoading(false);
     });
 
     return () => {
@@ -78,7 +94,23 @@ export const BlogProvider = ({ children }) => {
   return (
     <>
       <BlogContext.Provider
-        value={{ createUser, signIn, logout, user, setUser, loading }}
+        value={{
+          createUser,
+          signIn,
+          logout,
+          user,
+          setUser,
+          loading,
+          navbarHeight,
+          setNavbarHeight,
+          showDropdown,
+          setShowDropdown,
+          openDropdown,
+          closeDropdown,
+          isProfileLoading,
+          setIsProfileLoading,
+          setLoading,
+        }}
       >
         {children}
       </BlogContext.Provider>
