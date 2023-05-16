@@ -5,8 +5,9 @@ import BlogContext from "../../context/BlogContext";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
+import UserPhoto from "../UserPhoto/UserPhoto";
 
-export default function Navbar() {
+export default function Navbar({ refNavbar }) {
   const { user, showDropdown, openDropdown } = useContext(BlogContext);
   const [showNavbar, setShowNavbar] = useState(true);
 
@@ -20,7 +21,10 @@ export default function Navbar() {
   return (
     <>
       {showNavbar && (
-        <nav className="w-full flex justify-center items-center bg-white shadow-sm fixed top-0 left-0 px-5 xl:px-0 z-[99]">
+        <nav
+          ref={refNavbar}
+          className="w-full flex justify-center items-center bg-white shadow-sm fixed top-0 left-0 px-5 xl:px-0 z-[99]"
+        >
           <div className="w-full max-w-[1300px] flex justify-between items-center py-5">
             <div className="flex flex-col">
               <Link to="/" className="text-xl text-gray-700 font-bold">
@@ -43,16 +47,16 @@ export default function Navbar() {
                     className="flex gap-1 justify-center items-center group relative cursor-pointer"
                     onClick={openDropdown}
                   >
-                    <div className="flex justify-center items-center w-[2.5em] h-[2.5em] bg-yellow-500 rounded-full overflow-hidden relative">
-                      <p className="uppercase font-bold text-white text-3xl">
-                        {user.email.slice(0, 1)}
-                      </p>
-                    </div>
+                    <UserPhoto />
                     <button className="w-[1em] h-[.85em] bg-white shadow-sm rounded-[4px] text-gray-500 absolute bottom-0 right-0">
-                      <IoMdArrowDropdown className="text-gray-800" />
+                      <IoMdArrowDropdown
+                        className={`text-gray-800 ${
+                          showDropdown && "rotate-180"
+                        }`}
+                      />
                     </button>
                   </div>
-                  {showDropdown && <ProfileDropdown />}
+                  <ProfileDropdown showDropdown={showDropdown} />
                 </li>
               )}
               {!user && (

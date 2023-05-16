@@ -13,49 +13,41 @@ const BlogContext = createContext();
 export const BlogProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState(0);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isProfileLoading, setIsProfileLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [picture, setPicture] = useState("");
 
   const createUser = async (email, password) => {
-    try {
-      setLoading(true);
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const userId = userCredential.user.uid;
-      const userData = {
-        id: userId,
-        firstname: "",
-        lastname: "",
-        email: email,
-        age: "",
-        role: "",
-        about: "",
-        completed: false,
-        open: false,
-      };
-      await setDoc(doc(db, "users", userId), userData);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      throw error;
-    }
+    setLoading(true);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const userId = userCredential.user.uid;
+    const userData = {
+      id: userId,
+      rank: 0,
+      firstName: "",
+      lastName: "",
+      email: email,
+      birthDate: "",
+      about: "",
+      completed: false,
+      picture: "",
+    };
+    await setDoc(doc(db, "users", userId), userData);
+    setLoading(false);
   };
 
   const signIn = async (email, password) => {
-    try {
-      setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      throw error;
-    }
+    setLoading(true);
+    await signInWithEmailAndPassword(auth, email, password);
+    setLoading(false);
   };
 
   const logout = async () => {
@@ -64,6 +56,7 @@ export const BlogProvider = ({ children }) => {
       await signOut(auth);
       setLoading(false);
       setShowDropdown(false);
+      setIsUserLoaded(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -89,7 +82,31 @@ export const BlogProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [user]);
+
+  useEffect(() => {
+    const userDetail = async () => {
+      try {
+        const currentUser = auth.currentUser;
+        const userRef = db.collection("users").doc(currentUser.uid);
+        await userRef.get().then((doc) => {
+          if (doc.exists) {
+            const userData = doc.data();
+            setUserDetails(userData);
+            setIsProfileLoading(false);
+          }
+        });
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user && !isUserLoaded) {
+      userDetail();
+      setIsUserLoaded(true);
+    }
+  }, [user, isUserLoaded]);
 
   return (
     <>
@@ -100,6 +117,8 @@ export const BlogProvider = ({ children }) => {
           logout,
           user,
           setUser,
+          userDetails,
+          setUserDetails,
           loading,
           navbarHeight,
           setNavbarHeight,
@@ -110,6 +129,10 @@ export const BlogProvider = ({ children }) => {
           isProfileLoading,
           setIsProfileLoading,
           setLoading,
+          isLoading,
+          setIsLoading,
+          picture,
+          setPicture,
         }}
       >
         {children}
@@ -119,3 +142,6 @@ export const BlogProvider = ({ children }) => {
 };
 
 export default BlogContext;
+
+
+
