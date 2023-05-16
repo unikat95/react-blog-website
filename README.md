@@ -15,3 +15,7 @@ To run the application, clone the repository and install the necessary dependenc
 Contributions to the project are welcome! If you find a bug or would like to suggest a new feature, please open an issue or submit a pull request.
 
 Note: This README is a placeholder and will be updated as the project progresses.
+
+# Live demo
+https://blog-app-262df.web.app/
+(Firebase Hosting URL - automatically updated on every `git push`)
