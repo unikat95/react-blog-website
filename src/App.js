@@ -14,6 +14,7 @@ import { BlogProvider } from "./context/BlogContext";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import Account from "./pages/Account";
 import Users from "./pages/Users";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const router = createBrowserRouter(
@@ -28,10 +29,12 @@ function App() {
             </ProtectedRoutes>
           }
         />
-        <Route path="/users" element={<Users />} />
         <Route path="account" element={<Account />}>
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
+        </Route>
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="users" element={<Users />} />
         </Route>
       </Route>
     )

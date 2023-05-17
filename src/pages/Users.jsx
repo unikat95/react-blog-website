@@ -1,30 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { db } from "../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { AiOutlineEdit } from "react-icons/ai";
-import { BsThreeDotsVertical } from "react-icons/bs";
+
 import BlogContext from "../context/BlogContext";
 import LoadingProfile from "../components/LoadingProfile/LoadingProfile";
+import UserListItem from "../components/UserListItem/UserListItem";
+import { useLocation } from "react-router-dom";
 
 export default function Users() {
-  const [loadingUsers, setLoadingUsers] = useState(false);
-  const [userList, setUserList] = useState([]);
-  const usersCollectionRef = collection(db, "users");
   const { isProfileLoading } = useContext(BlogContext);
-
-  const [isOpenList, setIsOpenList] = useState(
-    new Array(userList.length).fill(false)
-  );
-
-  const handleToggleList = (index) => {
-    setIsOpenList((prevState) => {
-      const newState = [...prevState];
-      newState[index] = !newState[index];
-      return newState;
-    });
-  };
+  const [userList, setUserList] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+  const usersCollectionRef = collection(db, "users");
+  const dropdownRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     const getUserList = async () => {
@@ -35,7 +25,6 @@ export default function Users() {
           ...user.data(),
           id: user.id,
         }));
-        console.log(usersDetail);
         setUserList(usersDetail);
         setLoadingUsers(false);
       } catch (error) {
@@ -51,52 +40,31 @@ export default function Users() {
   }
 
   return (
-    <>
-      <div className="flex flex-col gap-1">
-        <h1>User list:</h1>
-        {userList.map((el, index) => (
-          <div
-            key={el.id}
-            className="flex justify-between items-center justify-items-start bg-slate-50 hover:bg-gray-100 p-2 relative rounded-md shadow-sm"
-          >
-            <p className="text-sm">{el.email}</p>
-            <p className="text-sm">
-              <img src={el.picture} alt="" className="w-[2em] rounded-full" />
-            </p>
-            <p className="text-sm">{el.firstName}</p>
-            <p className="text-sm">{el.lastName}</p>
-            <p className="text-sm">{el.birthDate}</p>
-            <p className="text-sm">
-              {el.about.length >= 10 && `${el.about.slice(0, 10)}...`}
-            </p>
-
-            <button
-              className="hover:bg-gray-200 p-2 rounded-full z-[98]"
-              onClick={() => handleToggleList(index)}
-            >
-              <BsThreeDotsVertical className="text-gray-600 hover:text-black" />
-            </button>
-
-            <ul
-              className={`flex flex-col items-start absolute bg-white rounded-md scale-0 ${
-                isOpenList[index] && "scale-100"
-              } overflow-hidden shadow-[rgba(0,_0,_0,_0.1)_0px_3px_8px] right-0 top-10 z-50 duration-200`}
-            >
-              <li className="w-full hover:bg-gray-100">
-                <button className="w-full py-2 px-3 flex gap-2 justify-start items-center text-sm">
-                  <AiOutlineEdit /> <p>Edit</p>
-                </button>
-              </li>
-              <li className="w-full hover:bg-gray-100">
-                <button className="w-full py-2 px-3 flex gap-2 justify-start items-center text-sm">
-                  <RiDeleteBinLine /> <p>Remove</p>
-                </button>
-              </li>
-            </ul>
-          </div>
-        ))}
-        {loadingUsers && <div>Loading users...</div>}
+    <div
+      className="w-full flex flex-col gap-2 bg-white p-2 rounded-md duration-300"
+      ref={dropdownRef}
+    >
+      <div className="grid grid-cols-[1fr,auto,auto] md:grid-cols-[2fr,1fr,1fr,1fr,1fr,auto] lg:grid-cols-[2fr,1fr,1fr,1fr,1fr,auto] xl:grid-cols-[3fr,2fr,2fr,2fr,2fr,4fr,auto] items-center justify-items-start hover:bg-slate-200 relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md">
+        <div className="text-sm font-bold text-slate-700">email</div>
+        <div className="text-sm font-bold text-slate-700">photo</div>
+        <div className="hidden md:flex text-sm font-bold text-slate-700">
+          First name
+        </div>
+        <div className="hidden md:flex text-sm font-bold text-slate-700">
+          Last name
+        </div>
+        <div className="hidden md:flex text-sm font-bold text-slate-700">
+          Birth date
+        </div>
+        <div className="hidden xl:flex text-sm font-bold text-slate-700">
+          About
+        </div>
+        <div className="text-sm font-bold text-slate-700">Action</div>
       </div>
-    </>
+      {userList.map((el, index) => (
+        <UserListItem key={el.id} el={el} index={index} />
+      ))}
+      {loadingUsers && <div>Loading users...</div>}
+    </div>
   );
 }

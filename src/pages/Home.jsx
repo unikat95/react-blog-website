@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import BlogContext from "../context/BlogContext";
 import LoadingProfile from "../components/LoadingProfile/LoadingProfile";
+import Container from "../components/Container/Container";
 
 export default function Home() {
   const { isProfileLoading } = useContext(BlogContext);
@@ -10,8 +11,8 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <Container>
       <h1>Home</h1>
-    </div>
+    </Container>
   );
 }

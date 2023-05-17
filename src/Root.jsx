@@ -5,15 +5,9 @@ import Loading from "./components/Loading/Loading";
 import BlogContext from "./context/BlogContext";
 
 export default function Root() {
-  const { loading, navbarHeight, setNavbarHeight, setShowDropdown } =
-    useContext(BlogContext);
+  const { loading, setShowDropdown } = useContext(BlogContext);
   const dropdownRef = useRef(null);
   const location = useLocation();
-
-  useEffect(() => {
-    const navbar = document.querySelector("nav");
-    setNavbarHeight(navbar.offsetHeight);
-  }, [navbarHeight, setNavbarHeight]);
 
   useEffect(() => {
     const handleCloseMenu = (e) => {
@@ -37,12 +31,7 @@ export default function Root() {
     <div className="w-full h-screen flex items-start justify-center relative bg-gradient-to-tr from-orange-100 to-blue-200">
       {loading && <Loading />}
       <Navbar refNavbar={dropdownRef} />
-      <div
-        style={{ marginTop: navbarHeight }}
-        className="w-full max-w-[1300px] flex flex-col py-5 px-5 xl:px-0"
-      >
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 }

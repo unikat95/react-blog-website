@@ -12,7 +12,7 @@ export default function UserPhoto() {
             <img
               src={userDetails.picture}
               alt=""
-              className="w-full h-full object-cover"
+              className="w-full h-screen max-w-[2em] max-h-[2em] object-cover"
             />
           ) : userDetails.firstName === "" && userDetails.lastName === "" ? (
             user.email ? (

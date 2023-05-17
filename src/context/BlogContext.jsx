@@ -15,6 +15,7 @@ export const BlogProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userDetails, setUserDetails] = useState({});
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const [isUserDetailsLoaded, setIsUserDetailsLoaded] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState(0);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isProfileLoading, setIsProfileLoading] = useState(true);
@@ -94,6 +95,7 @@ export const BlogProvider = ({ children }) => {
             const userData = doc.data();
             setUserDetails(userData);
             setIsProfileLoading(false);
+            setIsUserDetailsLoaded(true);
           }
         });
         setIsLoading(false);
@@ -133,6 +135,8 @@ export const BlogProvider = ({ children }) => {
           setIsLoading,
           picture,
           setPicture,
+          isUserDetailsLoaded,
+          setIsUserDetailsLoaded,
         }}
       >
         {children}
@@ -142,6 +146,3 @@ export const BlogProvider = ({ children }) => {
 };
 
 export default BlogContext;
-
-
-

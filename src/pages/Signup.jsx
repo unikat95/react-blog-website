@@ -34,7 +34,9 @@ export default function Signup() {
       <SignForm
         handleSubmit={handleSubmit}
         setEmail={setEmail}
+        password={password}
         setPassword={setPassword}
+        repeatPassword={repeatPassword}
         setRepeatPassword={setRepeatPassword}
         value={"Sign Up"}
         title={"Create account"}

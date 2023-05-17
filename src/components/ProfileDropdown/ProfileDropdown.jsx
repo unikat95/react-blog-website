@@ -64,18 +64,18 @@ export default function ProfileDropdown({ showDropdown }) {
             <p>Settings</p>
           </Link>
         </li>
-        {userRank.rank === 999 && (
-          <li className="w-full text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-700 group">
-            <Link
-              to=""
-              className="py-2 px-5 border-b flex justify-start items-center gap-2"
-              onClick={closeDropdown}
-            >
-              <RiDashboardFill className="text-gray-400" />
-              <p>Dashboard</p>
-            </Link>
-          </li>
-        )}
+        {/* {userRank.rank === 999 && ( */}
+        <li className="w-full text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-700 group">
+          <Link
+            to="/dashboard"
+            className="py-2 px-5 border-b flex justify-start items-center gap-2"
+            onClick={closeDropdown}
+          >
+            <RiDashboardFill className="text-gray-400" />
+            <p>Dashboard</p>
+          </Link>
+        </li>
+        {/* )} */}
         <li className="w-full text-sm text-gray-700 hover:bg-gray-900 hover:text-white group border-b">
           <button
             className="py-2 px-5 flex justify-start items-center gap-2"

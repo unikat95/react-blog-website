@@ -6,6 +6,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 import UserPhoto from "../UserPhoto/UserPhoto";
+import Logo from "../Logo/Logo";
 
 export default function Navbar({ refNavbar }) {
   const { user, showDropdown, openDropdown } = useContext(BlogContext);
@@ -14,8 +15,11 @@ export default function Navbar({ refNavbar }) {
   const location = useLocation();
 
   useEffect(() => {
-    const excludedPaths = ["/account/signin", "/account/signup", "/dashboard"];
-    setShowNavbar(!excludedPaths.includes(location.pathname));
+    const excludedPaths = ["/dashboard", "/account"];
+    const isExcludedPath = excludedPaths.some((path) =>
+      location.pathname.startsWith(path)
+    );
+    setShowNavbar(!isExcludedPath);
   }, [location]);
 
   return (
@@ -26,11 +30,7 @@ export default function Navbar({ refNavbar }) {
           className="w-full flex justify-center items-center bg-white shadow-sm fixed top-0 left-0 px-5 xl:px-0 z-[99]"
         >
           <div className="w-full max-w-[1300px] flex justify-between items-center py-5">
-            <div className="flex flex-col">
-              <Link to="/" className="text-xl text-gray-700 font-bold">
-                BlogApp
-              </Link>
-            </div>
+            <Logo />
             <ul className="flex gap-10 justify-center items-center">
               <li>
                 <Link to="/">Home</Link>
@@ -38,9 +38,6 @@ export default function Navbar({ refNavbar }) {
               <li>
                 <Link to="">Articles</Link>
               </li>
-              {/* <li>
-                <Link to="/users">Users</Link>
-              </li> */}
               {user && (
                 <li className="relative">
                   <div
