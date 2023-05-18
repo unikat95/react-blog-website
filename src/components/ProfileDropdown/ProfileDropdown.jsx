@@ -8,7 +8,7 @@ import { RiDashboardFill } from "react-icons/ri";
 import BlogContext from "../../context/BlogContext";
 import { auth, db } from "../../config/firebase";
 
-export default function ProfileDropdown({ showDropdown }) {
+export default function ProfileDropdown({ showDropdown, margin, marginRight }) {
   const { logout, closeDropdown } = useContext(BlogContext);
   const [userRank, setUserRank] = useState({});
   const navigate = useNavigate();
@@ -38,7 +38,9 @@ export default function ProfileDropdown({ showDropdown }) {
   };
 
   return (
-    <nav className="absolute top-[2.5em] right-0 z-[99]">
+    <nav
+      className={`absolute top-[2.5em] right-0 z-[99] ${margin} ${marginRight}`}
+    >
       <ul
         className={`bg-white shadow-[rgba(0,_0,_0,_0.1)_0px_3px_8px] flex flex-col ${
           !showDropdown && "hidden"
@@ -64,18 +66,18 @@ export default function ProfileDropdown({ showDropdown }) {
             <p>Settings</p>
           </Link>
         </li>
-        {/* {userRank.rank === 999 && ( */}
-        <li className="w-full text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-700 group">
-          <Link
-            to="/dashboard"
-            className="py-2 px-5 border-b flex justify-start items-center gap-2"
-            onClick={closeDropdown}
-          >
-            <RiDashboardFill className="text-gray-400" />
-            <p>Dashboard</p>
-          </Link>
-        </li>
-        {/* )} */}
+        {userRank.rank === 999 && (
+          <li className="w-full text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-700 group">
+            <Link
+              to="/dashboard"
+              className="py-2 px-5 border-b flex justify-start items-center gap-2"
+              onClick={closeDropdown}
+            >
+              <RiDashboardFill className="text-gray-400" />
+              <p>Dashboard</p>
+            </Link>
+          </li>
+        )}
         <li className="w-full text-sm text-gray-700 hover:bg-gray-900 hover:text-white group border-b">
           <button
             className="py-2 px-5 flex justify-start items-center gap-2"

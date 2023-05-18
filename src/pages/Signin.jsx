@@ -5,7 +5,7 @@ import SignNav from "../components/SignNav/SignNav";
 import SignForm from "../components/SignForm/SignForm";
 
 export default function Signin() {
-  const { signIn } = useContext(BlogContext);
+  const { signIn, setLoading } = useContext(BlogContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -19,6 +19,7 @@ export default function Signin() {
       navigate("/profile");
     } catch (error) {
       setError(true);
+      setLoading(false);
     }
   };
 

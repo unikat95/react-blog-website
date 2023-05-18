@@ -13,6 +13,11 @@
         font-family: 'Poppins', sans-serif;
     }
 
+
+      .focused:focus {
+        outline: none;
+      }
+
     .loading-animation {
         background-color: #00a0fd;
         position: absolute;

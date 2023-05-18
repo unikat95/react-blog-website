@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import UsersDropdown from "../UsersDropdown/UsersDropdown";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 export default function UserListItem({ el, index }) {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const handleBackgroundClick = (event) => {
+    if (dropdownRef.current && dropdownRef.current.contains(event.target)) {
+      return;
+    }
+
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleBackgroundClick);
+    return () => {
+      document.removeEventListener("click", handleBackgroundClick);
+    };
+  }, []);
 
   return (
-    <div className="grid grid-cols-[1fr,auto,auto] md:grid-cols-[2fr,1fr,1fr,1fr,auto,auto] lg:grid-cols-[2fr,1fr,1fr,1fr,1fr,auto] xl:grid-cols-[3fr,2fr,2fr,2fr,2fr,4fr,auto] items-center justify-items-start bg-slate-100 hover:bg-slate-200 relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md">
-      <div>{el.email}</div>
+    <div
+      ref={dropdownRef}
+      className="grid grid-cols-[4fr,1fr,auto] md:grid-cols-[2fr,1fr,1fr,1fr,auto] lg:grid-cols-[2fr,1fr,1fr,1fr,1fr,auto] xl:grid-cols-[3fr,2fr,2fr,2fr,2fr,4fr,auto] items-center justify-items-start bg-slate-100 hover:bg-slate-200 relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md"
+    >
+      <div>
+        <p className="text-sm text-slate-500 font-medium">{el.email}</p>
+      </div>
       <div>
         {el.picture === "" ? (
           <span className="w-[2em] h-[2em] bg-gray-500 flex justify-center items-center rounded-full uppercase text-white font-bold">
@@ -23,16 +44,22 @@ export default function UserListItem({ el, index }) {
         )}
       </div>
       <div className="hidden md:flex">
-        <p>{el.firstName !== "" ? el.firstName : "---"}</p>
+        <p className="text-sm text-slate-500 font-medium">
+          {el.firstName !== "" ? el.firstName : "---"}
+        </p>
       </div>
       <div className="hidden md:flex">
-        <p>{el.lastName !== "" ? el.lastName : "---"}</p>
+        <p className="text-sm text-slate-500 font-medium">
+          {el.lastName !== "" ? el.lastName : "---"}
+        </p>
       </div>
-      <div className="hidden md:flex">
-        <p>{el.birthDate !== "" ? el.birthDate : "---"}</p>
+      <div className="hidden lg:flex">
+        <p className="text-sm text-slate-500 font-medium">
+          {el.birthDate !== "" ? el.birthDate : "---"}
+        </p>
       </div>
       <div className="hidden xl:flex">
-        <p>
+        <p className="text-sm text-slate-500 font-medium">
           {el.about !== ""
             ? el.about.length > 30
               ? el.about.slice(0, 30) + "..."

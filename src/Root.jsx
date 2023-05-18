@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
-import Loading from "./components/Loading/Loading";
+import LoadingBar from "./components/LoadingBar/LoadingBar";
 import BlogContext from "./context/BlogContext";
 
 export default function Root() {
@@ -29,7 +29,7 @@ export default function Root() {
 
   return (
     <div className="w-full h-screen flex items-start justify-center relative bg-gradient-to-tr from-orange-100 to-blue-200">
-      {loading && <Loading />}
+      {loading && <LoadingBar />}
       <Navbar refNavbar={dropdownRef} />
       <Outlet />
     </div>

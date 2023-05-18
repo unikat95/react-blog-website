@@ -21,6 +21,7 @@ export const BlogProvider = ({ children }) => {
   const [isProfileLoading, setIsProfileLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [picture, setPicture] = useState("");
+  const [open, setOpen] = useState(true);
 
   const createUser = async (email, password) => {
     setLoading(true);
@@ -77,15 +78,8 @@ export const BlogProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-      setIsProfileLoading(false);
     });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [user]);
-
-  useEffect(() => {
     const userDetail = async () => {
       try {
         const currentUser = auth.currentUser;
@@ -95,7 +89,6 @@ export const BlogProvider = ({ children }) => {
             const userData = doc.data();
             setUserDetails(userData);
             setIsProfileLoading(false);
-            setIsUserDetailsLoaded(true);
           }
         });
         setIsLoading(false);
@@ -108,7 +101,11 @@ export const BlogProvider = ({ children }) => {
       userDetail();
       setIsUserLoaded(true);
     }
-  }, [user, isUserLoaded]);
+
+    return () => {
+      unsubscribe();
+    };
+  }, [user]);
 
   return (
     <>
@@ -137,6 +134,8 @@ export const BlogProvider = ({ children }) => {
           setPicture,
           isUserDetailsLoaded,
           setIsUserDetailsLoaded,
+          open,
+          setOpen,
         }}
       >
         {children}

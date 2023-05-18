@@ -13,7 +13,12 @@ export default function DashboardNav({ open }) {
         value={"Users"}
         to={"/dashboard/users"}
       />
-      <DashboardLink open={open} Icon={MdArticle} value={"Articles"} />
+      <DashboardLink
+        open={open}
+        Icon={MdArticle}
+        value={"Articles"}
+        to={"/dashboard/articles"}
+      />
     </ul>
   );
 }

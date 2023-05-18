@@ -7,6 +7,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 import UserPhoto from "../UserPhoto/UserPhoto";
 import Logo from "../Logo/Logo";
+import UserProfile from "../UserProfile/UserProfile";
 
 export default function Navbar({ refNavbar }) {
   const { user, showDropdown, openDropdown } = useContext(BlogContext);
@@ -38,24 +39,7 @@ export default function Navbar({ refNavbar }) {
               <li>
                 <Link to="">Articles</Link>
               </li>
-              {user && (
-                <li className="relative">
-                  <div
-                    className="flex gap-1 justify-center items-center group relative cursor-pointer"
-                    onClick={openDropdown}
-                  >
-                    <UserPhoto />
-                    <button className="w-[1em] h-[.85em] bg-white shadow-sm rounded-[4px] text-gray-500 absolute bottom-0 right-0">
-                      <IoMdArrowDropdown
-                        className={`text-gray-800 ${
-                          showDropdown && "rotate-180"
-                        }`}
-                      />
-                    </button>
-                  </div>
-                  <ProfileDropdown showDropdown={showDropdown} />
-                </li>
-              )}
+              {user && <UserProfile />}
               {!user && (
                 <>
                   <li>

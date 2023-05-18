@@ -1,5 +1,11 @@
 {
-  "projects": {
-    "default": "blog-app-262df"
+  "hosting": {
+    "public": "public",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }
