@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../config/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 
 const BlogContext = createContext();
 
@@ -22,6 +22,7 @@ export const BlogProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [picture, setPicture] = useState("");
   const [open, setOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const createUser = async (email, password) => {
     setLoading(true);
@@ -78,6 +79,9 @@ export const BlogProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      if (!currentUser) {
+        setIsProfileLoading(false);
+      }
     });
 
     const userDetail = async () => {
@@ -136,6 +140,8 @@ export const BlogProvider = ({ children }) => {
           setIsUserDetailsLoaded,
           open,
           setOpen,
+          isModalOpen,
+          setIsModalOpen,
         }}
       >
         {children}

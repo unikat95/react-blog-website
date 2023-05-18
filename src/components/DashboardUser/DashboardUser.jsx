@@ -32,7 +32,7 @@ export default function DashboardUser() {
   return (
     <div
       ref={profileRef}
-      className="w-full h-auto flex justify-end lg:justify-between items-center bg-white text-slate-800 gap-5 lg:gap-10  px-2 md:px-3 lg:px-7 xl:px-10 shadow-sm"
+      className="w-full h-auto flex justify-end lg:justify-between items-center bg-white text-slate-800 gap-5 lg:gap-10  px-2 md:px-3 lg:px-7 xl:px-10 shadow-sm z-[998]"
     >
       <div className="hidden sm:flex sm:w-[calc(100%-12rem)] lg:w-full justify-end items-center group relative lg:flex">
         <GoSearch className="bg-white p-2" size="40" />
@@ -41,7 +41,7 @@ export default function DashboardUser() {
           name="search"
           id="search"
           placeholder="Search..."
-          className={`w-[7em] focus:w-full focus:border-l-[4px] focus:border-blue-400 p-2 outline-none border-white border-l-[4px] bg-slate-100 placeholder:text-slate-800 rounded-md ${
+          className={`w-[7em] focus:w-full focus:border-l-[4px] focus:border-blue-400 py-2 px-4 outline-none border-white bg-slate-100 placeholder:text-slate-800 rounded-md ${
             searchInput
               ? "w-full focus:bg-slate-100  outline-none focus:outline-none"
               : ""
