@@ -9,7 +9,7 @@ export default function Home() {
         <h1 className="text-2xl font-medium text-slate-700">
           Latest articles:
         </h1>
-        <div className="w-full h-auto flex gap-5">
+        <div className="w-full h-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <LatestArticles />
         </div>
       </div>

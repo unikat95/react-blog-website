@@ -39,8 +39,6 @@ export default function DashCreateArticle() {
     return () => clearInterval(inter);
   }, []);
 
-  console.log(message);
-
   return (
     <>
       <DashboardContainer>
@@ -62,6 +60,7 @@ export default function DashCreateArticle() {
                   value={title}
                   className="bg-slate-100 p-2 focus:outline-none"
                   onChange={(e) => setTitle(e.target.value)}
+                  required
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
@@ -73,6 +72,7 @@ export default function DashCreateArticle() {
                   value={image}
                   className="bg-slate-100 p-2 focus:outline-none"
                   onChange={(e) => setImage(e.target.value)}
+                  required
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
@@ -85,6 +85,7 @@ export default function DashCreateArticle() {
                   value={text}
                   className="bg-slate-100 p-2 focus:outline-none"
                   onChange={(e) => setText(e.target.value)}
+                  required
                 />
               </div>
               <div className="flex gap-1">

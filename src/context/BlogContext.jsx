@@ -68,24 +68,21 @@ export const BlogProvider = ({ children }) => {
 
   useEffect(() => {
     setLoadingUsers(true);
-    setTimeout(() => {
-      // temporary
-      const getUserList = async () => {
-        try {
-          const data = await getDocs(usersCollectionRef);
-          const usersDetail = data.docs.map((user) => ({
-            ...user.data(),
-            id: user.id,
-          }));
-          setUserList(usersDetail);
-          setLoadingUsers(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    const getUserList = async () => {
+      try {
+        const data = await getDocs(usersCollectionRef);
+        const usersDetail = data.docs.map((user) => ({
+          ...user.data(),
+          id: user.id,
+        }));
+        setUserList(usersDetail);
+        setLoadingUsers(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      getUserList();
-    }, 500);
+    getUserList();
   }, []);
 
   const openDropdown = () => {

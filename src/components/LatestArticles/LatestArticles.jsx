@@ -13,6 +13,7 @@ export default function LatestArticles() {
   if (isProfileLoading || !userList.length) {
     return <LoadingProfile />;
   }
+
   return (
     <>
       {latestArticles.map((art) => {

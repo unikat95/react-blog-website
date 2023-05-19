@@ -15,7 +15,7 @@ export default function Users() {
     <>
       <Container>
         <div>Users</div>
-        <div className="flex gap-10">
+        <div className="flex flex-wrap gap-2">
           {userList.map((user) => (
             <Link
               to={`/users/${user.id}`}

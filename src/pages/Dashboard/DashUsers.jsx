@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { db } from "../../config/firebase";
-import { collection, getDocs } from "firebase/firestore";
-
 import BlogContext from "../../context/BlogContext";
 import LoadingProfile from "../../components/LoadingProfile/LoadingProfile";
 import UserListItem from "../../components/UserListItem/UserListItem";
@@ -11,8 +8,14 @@ import DashboardContainer from "../../components/DashboardContainer/DashboardCon
 import { AiTwotoneSetting } from "react-icons/ai";
 
 export default function DashUsers() {
-  const { isProfileLoading, userList, setUserList, loadingUsers } =
-    useContext(BlogContext);
+  const { isProfileLoading, userList, loadingUsers } = useContext(BlogContext);
+  const [spinner, setSpinner] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSpinner(false);
+    }, 300);
+  }, []);
 
   if (isProfileLoading) {
     return <LoadingProfile />;
@@ -44,10 +47,11 @@ export default function DashUsers() {
             <AiTwotoneSetting size="20" className="text-slate-700" />
           </div>
         </div>
-        {userList.map((el, index) => (
-          <UserListItem key={el.id} el={el} index={index} />
-        ))}
-        {loadingUsers && (
+        {!spinner &&
+          userList.map((el, index) => (
+            <UserListItem key={el.id} el={el} index={index} />
+          ))}
+        {spinner && (
           <div className="w-full h-auto flex justify-center items-center py-10 relative">
             <LoadingSpinner
               width={"w-[1.75em]"}

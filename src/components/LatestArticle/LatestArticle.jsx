@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Author from "../Author/Author";
 
 export default function LatestArticle({ art, formattedDate, author }) {
-  console.log(art.id);
   return (
     <div key={art.id} className="w-full h-auto flex flex-col items-start gap-3">
       <Link
@@ -13,7 +12,7 @@ export default function LatestArticle({ art, formattedDate, author }) {
         <img
           src={art.image}
           alt=""
-          className="w-full h-full max-h-[15em] object-cover rounded-lg"
+          className="w-full min-h-[15em] max-h-[15em] object-cover rounded-lg"
         />
         <div className="flex flex-col gap-1">
           <h3 className="text-xs text-slate-500">Added: {formattedDate}</h3>

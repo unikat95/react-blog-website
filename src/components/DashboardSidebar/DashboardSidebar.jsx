@@ -15,8 +15,10 @@ export default function DashboardSidebar({ handleLogout, toggleMenu }) {
   return (
     <div
       className={`${
-        !open ? "w-[18em] -translate-x-0" : "w-[6em]"
-      }  h-full flex flex-col justify-between items-start bg-white px-5 py-6 absolute -translate-x-20 lg:-translate-x-0 lg:relative shadow-md z-[980] transition-width duration-300`}
+        !open
+          ? "translate-x-[0] w-[18em]  lg:translate-x-0"
+          : "w-[6em] translate-x-[-6rem]"
+      }  h-full flex flex-col justify-between items-start bg-white px-5 py-6 absolute lg:-translate-x-[0] lg:relative shadow-md z-[980] transition-width duration-300`}
     >
       <div className="w-full flex flex-col gap-20 items-center">
         <DashboardLogo open={open} />
@@ -71,7 +73,7 @@ export default function DashboardSidebar({ handleLogout, toggleMenu }) {
       </div>
       <button
         onClick={toggleMenu}
-        className="absolute -right-6 top-6 bg-white p-1 rounded-md"
+        className={`absolute -right-8  top-6 bg-white p-1 rounded-md`}
       >
         <BsArrowRightShort
           size="32"

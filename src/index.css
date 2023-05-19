@@ -12,6 +12,7 @@
         background: #f1f1f1;
         font-family: 'Poppins', sans-serif;
         overflow-x: hidden;
+        font-size: 16px;
     }
 
     .loading-animation {
@@ -22,6 +23,49 @@
         width: 100%;
         height: 0.25em;
         animation: loading 2s ease-in infinite alternate;
+    }
+
+    .hamburger {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: .5em;
+        background: transparent;
+    }
+
+    .hamburger.active {
+        background: transparent;
+    }
+
+    .hamburger::before, .hamburger::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: #1b1b1b;
+        transition: .25s ease-in-out;
+        border-radius: 1rem;
+    }
+
+    .hamburger::before {
+        transform: translateY(-12px);
+        box-shadow: 0 12px 0 black;
+    }
+
+    .hamburger::after {
+        transform: translateY(12px);
+    }
+
+    .hamburger.active::before {
+        box-shadow: none;
+        transform: rotate(45deg);
+    }
+
+    .hamburger.active::after {
+        transform: rotate(-45deg);
     }
 
     @keyframes loading {

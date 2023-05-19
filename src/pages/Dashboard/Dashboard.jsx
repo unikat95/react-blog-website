@@ -4,9 +4,10 @@ import { Outlet, useNavigate } from "react-router-dom";
 import BlogContext from "../../context/BlogContext";
 import DashboardSidebar from "../../components/DashboardSidebar/DashboardSidebar";
 import DashboardUser from "../../components/DashboardUser/DashboardUser";
+import LoadingProfile from "../../components/LoadingProfile/LoadingProfile";
 
 export default function Dashboard() {
-  const { logout, open, setOpen } = useContext(BlogContext);
+  const { logout, open, setOpen, isProfileLoading } = useContext(BlogContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -18,6 +19,8 @@ export default function Dashboard() {
     setOpen(!open);
     console.log("first");
   };
+
+  if (isProfileLoading) return <LoadingProfile />;
 
   return (
     <>
