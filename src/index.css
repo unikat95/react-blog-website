@@ -11,12 +11,8 @@
     body {
         background: #f1f1f1;
         font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
     }
-
-
-      .focused:focus {
-        outline: none;
-      }
 
     .loading-animation {
         background-color: #00a0fd;

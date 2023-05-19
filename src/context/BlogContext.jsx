@@ -6,23 +6,24 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../config/firebase";
-import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 
 const BlogContext = createContext();
 
 export const BlogProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [userDetails, setUserDetails] = useState({});
-  const [isUserLoaded, setIsUserLoaded] = useState(false);
-  const [isUserDetailsLoaded, setIsUserDetailsLoaded] = useState(false);
-  const [navbarHeight, setNavbarHeight] = useState(0);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [isProfileLoading, setIsProfileLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userList, setUserList] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
   const [picture, setPicture] = useState("");
+  const [navbarHeight, setNavbarHeight] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
   const [open, setOpen] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const usersCollectionRef = collection(db, "users");
 
   const createUser = async (email, password) => {
     setLoading(true);
@@ -59,12 +60,33 @@ export const BlogProvider = ({ children }) => {
       await signOut(auth);
       setLoading(false);
       setShowDropdown(false);
-      setIsUserLoaded(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setLoadingUsers(true);
+    setTimeout(() => {
+      // temporary
+      const getUserList = async () => {
+        try {
+          const data = await getDocs(usersCollectionRef);
+          const usersDetail = data.docs.map((user) => ({
+            ...user.data(),
+            id: user.id,
+          }));
+          setUserList(usersDetail);
+          setLoadingUsers(false);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      getUserList();
+    }, 500);
+  }, []);
 
   const openDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -95,15 +117,13 @@ export const BlogProvider = ({ children }) => {
             setIsProfileLoading(false);
           }
         });
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
 
-    if (user && !isUserLoaded) {
+    if (user) {
       userDetail();
-      setIsUserLoaded(true);
     }
 
     return () => {
@@ -122,6 +142,8 @@ export const BlogProvider = ({ children }) => {
           setUser,
           userDetails,
           setUserDetails,
+          userList,
+          setUserList,
           loading,
           navbarHeight,
           setNavbarHeight,
@@ -132,16 +154,14 @@ export const BlogProvider = ({ children }) => {
           isProfileLoading,
           setIsProfileLoading,
           setLoading,
-          isLoading,
-          setIsLoading,
           picture,
           setPicture,
-          isUserDetailsLoaded,
-          setIsUserDetailsLoaded,
           open,
           setOpen,
           isModalOpen,
           setIsModalOpen,
+          loadingUsers,
+          setLoadingUsers,
         }}
       >
         {children}

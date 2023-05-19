@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { auth, db } from "../../config/firebase";
+import { db } from "../../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 import BlogContext from "../../context/BlogContext";
@@ -9,35 +9,10 @@ import UserListItem from "../../components/UserListItem/UserListItem";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import DashboardContainer from "../../components/DashboardContainer/DashboardContainer";
 import { AiTwotoneSetting } from "react-icons/ai";
-import { deleteUser } from "firebase/auth";
 
-export default function Users() {
-  const { isProfileLoading, user } = useContext(BlogContext);
-  const [userList, setUserList] = useState([]);
-  const [loadingUsers, setLoadingUsers] = useState(false);
-  const usersCollectionRef = collection(db, "users");
-
-  useEffect(() => {
-    setLoadingUsers(true);
-    setTimeout(() => {
-      // temporary
-      const getUserList = async () => {
-        try {
-          const data = await getDocs(usersCollectionRef);
-          const usersDetail = data.docs.map((user) => ({
-            ...user.data(),
-            id: user.id,
-          }));
-          setUserList(usersDetail);
-          setLoadingUsers(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
-      getUserList();
-    }, 500);
-  }, []);
+export default function DashUsers() {
+  const { isProfileLoading, userList, setUserList, loadingUsers } =
+    useContext(BlogContext);
 
   if (isProfileLoading) {
     return <LoadingProfile />;
@@ -47,18 +22,22 @@ export default function Users() {
     <>
       <DashboardContainer>
         <div className="grid grid-cols-[4fr,1fr,auto] md:grid-cols-[2fr,1fr,1fr,1fr,auto] lg:grid-cols-[2fr,1fr,1fr,1fr,1fr,auto] xl:grid-cols-[3fr,2fr,2fr,2fr,2fr,4fr,auto] items-center justify-items-start relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md">
-          <div className="text-sm font-bold text-slate-700">email</div>
-          <div className="text-sm font-bold text-slate-700">photo</div>
-          <div className="hidden md:flex text-sm font-bold text-slate-700">
+          <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
+            email
+          </div>
+          <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
+            photo
+          </div>
+          <div className="md:flex text-[.70rem] font-black text-slate-500 uppercase">
             First name
           </div>
-          <div className="hidden md:flex text-sm font-bold text-slate-700">
+          <div className="md:flex text-[.70rem] font-black text-slate-500 uppercase">
             Last name
           </div>
-          <div className="hidden lg:flex text-sm font-bold text-slate-700">
+          <div className="hidden lg:flex text-[.70rem] font-black text-slate-500 uppercase">
             Birth Date
           </div>
-          <div className="hidden xl:flex text-sm font-bold text-slate-700">
+          <div className="hidden xl:flex text-[.70rem] font-black text-slate-500 uppercase">
             About
           </div>
           <div className="px-2 bg-white w-[2em] h-[2em] rounded-full flex justify-center items-center">
@@ -70,7 +49,11 @@ export default function Users() {
         ))}
         {loadingUsers && (
           <div className="w-full h-auto flex justify-center items-center py-10 relative">
-            <LoadingSpinner />
+            <LoadingSpinner
+              width={"w-[1.75em]"}
+              height={"h-[1.75em]"}
+              value={"Loading user list..."}
+            />
           </div>
         )}
       </DashboardContainer>

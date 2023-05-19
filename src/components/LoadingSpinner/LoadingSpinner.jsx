@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function LoadingSpinner() {
+export default function LoadingSpinner({ width, height, value }) {
   return (
-    <div role="status">
+    <div role="status" className="flex justify-center items-center gap-2">
       <svg
         aria-hidden="true"
-        className="w-8 h-8 mr-2 text-gray-100 animate-spin dark:text-gray-100 fill-blue-600"
+        className={`${width} ${height} mr-2 text-gray-200 animate-spin dark:text-gray-200 fill-blue-600`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ export default function LoadingSpinner() {
           fill="currentFill"
         />
       </svg>
-      <span className="sr-only">Loading...</span>
+      <div>{value}</div>
     </div>
   );
 }

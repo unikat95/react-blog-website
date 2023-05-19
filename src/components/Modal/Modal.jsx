@@ -13,8 +13,8 @@ export default function Modal({
   return (
     <>
       {isModalOpen && (
-        <div className="w-full h-full flex justify-center items-center bg-black bg-opacity-10 absolute top-0 left-0 z-[9999]">
-          <div className="w-full max-w-[26em] flex flex-col justify-between items-end gap-12 p-5 bg-white rounded-md relative">
+        <div className="w-full h-full flex justify-center items-center bg-black bg-opacity-20 absolute top-0 left-0 z-[990]">
+          <div className="w-full max-w-[26em] flex flex-col justify-between items-end gap-12 p-5 bg-white rounded-md relative shadow-sm">
             <div>{children}</div>
             <div className="flex gap-2">
               <button

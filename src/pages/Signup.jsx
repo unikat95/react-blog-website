@@ -5,7 +5,7 @@ import SignNav from "../components/SignNav/SignNav";
 import SignForm from "../components/SignForm/SignForm";
 
 export default function Signup() {
-  const { createUser } = useContext(BlogContext);
+  const { createUser, setLoading } = useContext(BlogContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -22,6 +22,7 @@ export default function Signup() {
       } catch (error) {
         console.log(error.code);
         setError(true);
+        setLoading(false);
       }
     } else {
       setError(true);

@@ -2,6 +2,7 @@ import React from "react";
 
 import { HiUsers } from "react-icons/hi";
 import { MdArticle } from "react-icons/md";
+import { IoMdCreate } from "react-icons/io";
 import DashboardLink from "../DashboardLink/DashboardLink";
 
 export default function DashboardNav({ open }) {
@@ -18,6 +19,12 @@ export default function DashboardNav({ open }) {
         Icon={MdArticle}
         value={"Articles"}
         to={"/dashboard/articles"}
+      />
+      <DashboardLink
+        open={open}
+        Icon={IoMdCreate}
+        value={"Create Article"}
+        to={"/dashboard/create-article"}
       />
     </ul>
   );

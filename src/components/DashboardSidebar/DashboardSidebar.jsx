@@ -16,7 +16,7 @@ export default function DashboardSidebar({ handleLogout, toggleMenu }) {
     <div
       className={`${
         !open ? "w-[18em] -translate-x-0" : "w-[6em]"
-      }  h-full flex flex-col justify-between items-start bg-white px-5 py-6 absolute -translate-x-20 lg:-translate-x-0 lg:relative shadow-md z-[999] transition-width duration-300`}
+      }  h-full flex flex-col justify-between items-start bg-white px-5 py-6 absolute -translate-x-20 lg:-translate-x-0 lg:relative shadow-md z-[980] transition-width duration-300`}
     >
       <div className="w-full flex flex-col gap-20 items-center">
         <DashboardLogo open={open} />

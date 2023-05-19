@@ -2,18 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { Link, useLocation } from "react-router-dom";
 import BlogContext from "../../context/BlogContext";
-import { IoMdArrowDropdown } from "react-icons/io";
 
-import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
-import UserPhoto from "../UserPhoto/UserPhoto";
 import Logo from "../Logo/Logo";
 import UserProfile from "../UserProfile/UserProfile";
 
 export default function Navbar({ refNavbar }) {
-  const { user, showDropdown, openDropdown } = useContext(BlogContext);
+  const { user } = useContext(BlogContext);
   const [showNavbar, setShowNavbar] = useState(true);
-
   const location = useLocation();
+  const [scroll, setScroll] = useState(true);
 
   useEffect(() => {
     const excludedPaths = ["/dashboard", "/account"];
@@ -23,23 +20,38 @@ export default function Navbar({ refNavbar }) {
     setShowNavbar(!isExcludedPath);
   }, [location]);
 
+  window.addEventListener("scroll", () => {
+    window.scrollY > 50 ? setScroll(false) : setScroll(true);
+  });
+
   return (
     <>
       {showNavbar && (
         <nav
           ref={refNavbar}
-          className="w-full flex justify-center items-center bg-white shadow-sm fixed top-0 left-0 px-5 xl:px-0 z-[99]"
+          className={`w-full flex justify-center items-center ${
+            !scroll ? "bg-white py-3" : "py-7"
+          } fixed top-0 left-0 px-5 xl:px-0 z-[99] duration-300`}
         >
-          <div className="w-full max-w-[1300px] flex justify-between items-center py-5">
+          <div className="w-full max-w-[1300px] flex justify-between items-center ">
             <Logo />
             <ul className="flex gap-10 justify-center items-center">
               <li>
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="">Articles</Link>
+                <Link to="/articles">Articles</Link>
               </li>
-              {user && <UserProfile />}
+              <li>
+                <Link to="/users">Users</Link>
+              </li>
+              {user && (
+                <UserProfile
+                  bgColor={"bg-gray-200"}
+                  arrowBg={"bg-gray-100"}
+                  arrowText={"text-gray-900"}
+                />
+              )}
               {!user && (
                 <>
                   <li>

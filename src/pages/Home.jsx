@@ -1,18 +1,18 @@
-import React, { useContext } from "react";
-import BlogContext from "../context/BlogContext";
-import LoadingProfile from "../components/LoadingProfile/LoadingProfile";
+import React from "react";
 import Container from "../components/Container/Container";
+import LatestArticles from "../components/LatestArticles/LatestArticles";
 
 export default function Home() {
-  const { isProfileLoading } = useContext(BlogContext);
-
-  if (isProfileLoading) {
-    return <LoadingProfile />;
-  }
-
   return (
     <Container>
-      <h1>Home</h1>
+      <div className="flex flex-col gap-10">
+        <h1 className="text-2xl font-medium text-slate-700">
+          Latest articles:
+        </h1>
+        <div className="w-full h-auto flex gap-5">
+          <LatestArticles />
+        </div>
+      </div>
     </Container>
   );
 }

@@ -24,7 +24,11 @@ export default function DashboardLink({ Icon, open, value, to }) {
               }`}
             />
           </span>
-          <p className={`${open ? "scale-0" : "scale-100"} duration-200`}>
+          <p
+            className={`${
+              open ? "scale-0" : "scale-100"
+            } duration-300 whitespace-nowrap origin-left`}
+          >
             {value}
           </p>
         </Link>

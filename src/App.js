@@ -5,18 +5,27 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+
+import { BlogProvider } from "./context/BlogContext";
+import { ArticleProvider } from "./context/ArticleContext";
+
 import Root from "./Root";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import { BlogProvider } from "./context/BlogContext";
+import Users from "./pages/Users";
+import User from "./components/User/User";
+import Articles from "./pages/Articles";
+
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import Account from "./pages/Account";
-import Users from "./pages/Dashboard/Users";
+import DashUsers from "./pages/Dashboard/DashUsers";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Articles from "./pages/Dashboard/Articles";
+import DashArticles from "./pages/Dashboard/DashArticles";
 import DashboardHome from "./pages/Dashboard/Home";
+import Article from "./components/Article/Article";
+import DashCreateArticle from "./pages/Dashboard/DashCreateArticle";
 
 function App() {
   const router = createBrowserRouter(
@@ -31,10 +40,6 @@ function App() {
             </ProtectedRoutes>
           }
         />
-        <Route path="account" element={<Account />}>
-          <Route path="signin" element={<Signin />} />
-          <Route path="signup" element={<Signup />} />
-        </Route>
         <Route
           path="/dashboard"
           element={
@@ -44,16 +49,27 @@ function App() {
           }
         >
           <Route index element={<DashboardHome />} />
-          <Route path="users" element={<Users />} />
-          <Route path="articles" element={<Articles />} />
+          <Route path="users" element={<DashUsers />} />
+          <Route path="articles" element={<DashArticles />} />
+          <Route path="create-article" element={<DashCreateArticle />} />
         </Route>
+        <Route path="account" element={<Account />}>
+          <Route path="signin" element={<Signin />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
+        <Route path="/articles" element={<Articles />} />
+        <Route path="/articles/:artId" element={<Article />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<User />} />
       </Route>
     )
   );
 
   return (
     <BlogProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <ArticleProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </ArticleProvider>
     </BlogProvider>
   );
 }
