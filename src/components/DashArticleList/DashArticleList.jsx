@@ -17,18 +17,22 @@ export default function DashArticleList({
   formattedDate,
   editedFormattedDate,
   author,
+  deleteArticle,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   return (
     <>
       <button
         onClick={() => setIsModalOpen(!isModalOpen)}
         key={art.id}
-        className="grid grid-cols-[3fr,2fr,1fr,1fr,2.5%] items-center justify-items-start bg-slate-100 hover:bg-slate-200 relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md transition-all duration-300 origin-center"
+        className="grid grid-cols-[2fr,1fr] md:grid-cols-[1fr,1fr,auto] lg:grid-cols-[2fr,2fr,1fr,1fr,2.5%] items-center justify-items-start bg-slate-100 hover:bg-slate-200 relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md transition-all duration-300 origin-center"
       >
         <div>
-          <p className="text-sm text-slate-500 font-medium py-2">{art.title}</p>
+          <p className="text-sm text-slate-500 font-medium py-2 flex">
+            {art.title.length > 30 ? `${art.title.slice(0, 30)}...` : art.title}
+          </p>
         </div>
         <div>
           <div className="text-sm text-slate-500 font-medium flex gap-2 justify-center items-center">
@@ -54,15 +58,17 @@ export default function DashArticleList({
           </div>
         </div>
         <div>
-          <p className="text-sm text-slate-500 font-medium">{formattedDate}</p>
+          <p className="hidden md:flex text-sm text-slate-500 font-medium">
+            {formattedDate}
+          </p>
         </div>
         <div>
-          <p className="text-sm text-slate-500 font-medium">
+          <p className="hidden lg:flex text-sm text-slate-500 font-medium">
             {art.edited ? editedFormattedDate : formattedDate}
           </p>
         </div>
         <div>
-          <p className="text-sm text-slate-500 font-medium">
+          <p className="hidden xl:flex text-sm text-slate-500 font-medium">
             {art.edited ? (
               <AiFillCheckCircle size="22" className="text-lime-500" />
             ) : (
@@ -76,18 +82,31 @@ export default function DashArticleList({
           <div className="flex gap-2 justify-center items-center">
             <Link
               to={`/dashboard/edit-article/${art.id}`}
-              className="bg-slate-100 hover:bg-slate-800 text-slate-800 hover:text-slate-100 px-4 py-2 rounded-md flex justify-center items-center gap-1"
+              className="bg-slate-100 hover:bg-slate-800 text-slate-800 hover:text-slate-100 px-2 md:px-4 py-2 rounded-md flex justify-center items-center gap-1"
             >
               <AiFillEdit size="24" />
-              <p>Edit article</p>
+              <p>Edit</p>
             </Link>
             <button
-              onClick={() => {}}
+              onClick={() => setDeleteModalOpen(true)}
               className="bg-slate-100 hover:bg-slate-800 text-slate-800 hover:text-slate-100 px-4 py-2 rounded-md flex justify-center items-center gap-1"
             >
               <AiFillDelete size="24" />
-              <p>Delete article</p>
+              <p>Delete</p>
             </button>
+            <Modal
+              isModalOpen={deleteModalOpen}
+              setIsModalOpen={setDeleteModalOpen}
+              confirm={"Confirm"}
+              cancel={"Cancel"}
+              action={deleteArticle}
+              id={art.id}
+            >
+              <p>
+                Are you sure you want to delete the article? After deletion, any
+                data will be completely lost
+              </p>
+            </Modal>
           </div>
           <div>
             <button
@@ -98,7 +117,7 @@ export default function DashArticleList({
             </button>
           </div>
         </div>
-        <div className="w-full h-full flex flex-col gap-5 px-5 overflow-auto">
+        <div className="w-full h-full flex flex-col gap-5 px-2 md:px-5 overflow-auto">
           <div className="w-full h-auto flex flex-col justify-start items-center gap-10 rounded-md">
             <Link to={`/users/${author.id}`}>
               <Author

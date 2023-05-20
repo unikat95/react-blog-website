@@ -1,4 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
+
+import { AiFillCheckCircle } from "react-icons/ai";
+
 import DashboardContainer from "../../components/DashboardContainer/DashboardContainer";
 import ArticleContext from "../../context/ArticleContext";
 import BlogContext from "../../context/BlogContext";
@@ -7,7 +10,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function DashCreateArticle() {
   const { createArticle, getArticleList } = useContext(ArticleContext);
-  const { user, setIsProfileLoading } = useContext(BlogContext);
+  const { user } = useContext(BlogContext);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [text, setText] = useState("");
@@ -35,14 +38,14 @@ export default function DashCreateArticle() {
   useEffect(() => {
     const inter = setInterval(() => {
       setMessage(false);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(inter);
   }, []);
 
   return (
     <>
       <DashboardContainer>
-        <div className="flex flex-col gap-10 p-10">
+        <div className="w-full h-full flex flex-col gap-10 p-3 md:p-10 overflow-auto">
           <div>
             <p>Article list:</p>
           </div>
@@ -95,11 +98,16 @@ export default function DashCreateArticle() {
                 <Button value={"Add post"} />
               </div>
               <div
-                className={`bg-emerald-500 text-white py-5 px-10 rounded-md absolute top-10 left-[50%] translate-x-[-50%]  transition-transform z-[9999] ${
+                className={`w-auto rounded-md shadow-sm absolute top-10 left-[50%] translate-x-[-50%] flex overflow-hidden transition-transform z-[9999] ${
                   message ? "translate-y-0" : "translate-y-[-200%]"
                 }`}
               >
-                Article was created
+                <div className="w-auto p-4 bg-lime-400 text-lime-700">
+                  <AiFillCheckCircle size="24" />
+                </div>
+                <p className="w-full p-4 px-6 bg-lime-500 text-white whitespace-nowrap">
+                  Article successfully created!
+                </p>
               </div>
             </form>
           </div>

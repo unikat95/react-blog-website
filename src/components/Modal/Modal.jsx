@@ -6,16 +6,18 @@ export default function Modal({
   cancel,
   isModalOpen,
   setIsModalOpen,
+  action,
+  id,
 }) {
   return (
     <>
       {isModalOpen && (
         <div className="w-full h-full flex justify-center items-center absolute top-0 left-0 z-[990]">
-          <div className="w-auto max-w-[80%] max-h-[80%] flex flex-col justify-between items-end gap-12 p-5 bg-white rounded-md relative shadow-sm ">
+          <div className="w-auto max-w-[100%] md:max-w-[85%] max-h-[100%] md:max-h-[80%] flex flex-col justify-between items-end gap-12 p-3 md:p-5 bg-white md:rounded-md relative shadow-sm ">
             {children}
             <div className="flex gap-2">
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => action(id)}
                 className={`bg-red-500 hover:bg-red-700 px-4 py-2 text-white rounded-md text-sm ${
                   !confirm && "hidden"
                 }`}

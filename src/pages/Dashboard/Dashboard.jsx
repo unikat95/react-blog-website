@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="w-full h-[100dvh] bg-slate-200 grid grid-cols-1 lg:grid-cols-[auto,1fr]">
+      <div className="w-full h-full max-h-[100dvh] bg-slate-200 grid grid-cols-1 lg:grid-cols-[auto,1fr]">
         <DashboardSidebar toggleMenu={toggleMenu} handleLogout={handleLogout} />
         <div className="w-full h-full flex flex-col">
           <DashboardUser />
