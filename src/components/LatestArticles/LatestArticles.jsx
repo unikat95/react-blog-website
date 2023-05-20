@@ -24,6 +24,7 @@ export default function LatestArticles() {
 
         return (
           <LatestArticle
+            key={art.id}
             art={art}
             author={author}
             formattedDate={formattedDate}

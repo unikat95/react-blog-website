@@ -26,6 +26,7 @@ import DashArticles from "./pages/Dashboard/DashArticles";
 import DashboardHome from "./pages/Dashboard/Home";
 import Article from "./components/Article/Article";
 import DashCreateArticle from "./pages/Dashboard/DashCreateArticle";
+import EditArticle from "./components/EditArticle/EditArticle";
 
 function App() {
   const router = createBrowserRouter(
@@ -50,8 +51,9 @@ function App() {
         >
           <Route index element={<DashboardHome />} />
           <Route path="users" element={<DashUsers />} />
-          <Route path="articles" element={<DashArticles />} />
+          <Route path="articles" element={<DashArticles />}></Route>
           <Route path="create-article" element={<DashCreateArticle />} />
+          <Route path="edit-article/:editId" element={<EditArticle />} />
         </Route>
         <Route path="account" element={<Account />}>
           <Route path="signin" element={<Signin />} />

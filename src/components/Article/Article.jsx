@@ -15,7 +15,7 @@ export default function Article() {
 
   if (isProfileLoading || !author) return <LoadingProfile />;
 
-  return (
+  return article ? (
     <Container>
       <div className="w-full h-auto flex flex-col justify-start items-center gap-10 rounded-md">
         <Link to={`/users/${author.id}`}>
@@ -34,5 +34,7 @@ export default function Article() {
         <p>{article.text}</p>
       </div>
     </Container>
+  ) : (
+    <div>Loading article...</div>
   );
 }

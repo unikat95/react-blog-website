@@ -16,12 +16,12 @@ export default function LatestArticle({ art, formattedDate, author }) {
         />
         <div className="flex flex-col gap-1">
           <h3 className="text-xs text-slate-500">Added: {formattedDate}</h3>
-          <h2 className="w-full">
+          <h2 className="w-full text-gray-800 font-bold">
             {art.title.length > 45 ? `${art.title.slice(0, 45)}...` : art.title}
           </h2>
         </div>
         <div>
-          <p className="w-full">
+          <p className="w-full text-justify">
             {art.text.length > 150 ? `${art.text.slice(0, 150)}...` : art.text}
           </p>
         </div>

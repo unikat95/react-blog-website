@@ -11,7 +11,7 @@ import BlogContext from "./BlogContext";
 const ArticleContext = createContext();
 
 export function ArticleProvider({ children }) {
-  const { setLoading, setIsProfileLoading } = useContext(BlogContext);
+  const { setLoading } = useContext(BlogContext);
   const [articleList, setArticleList] = useState([]);
   const articlesCollectionRef = collection(db, "articles");
 
@@ -19,7 +19,8 @@ export function ArticleProvider({ children }) {
     setLoading(true);
     const newArticleData = {
       ...articleData,
-      createdAt: serverTimestamp(), // Dodaj pole createdAt z aktualną datą i czasem
+      createdAt: serverTimestamp(),
+      lastEdit: serverTimestamp(),
     };
     await addDoc(articlesCollectionRef, newArticleData);
     setLoading(false);
@@ -38,6 +39,18 @@ export function ArticleProvider({ children }) {
     }
   };
 
+  const updateArticle = (updatedArticle) => {
+    setArticleList((prevList) => {
+      const updatedList = prevList.map((article) => {
+        if (article.id === updatedArticle.id) {
+          return updatedArticle;
+        }
+        return article;
+      });
+      return updatedList;
+    });
+  };
+
   useEffect(() => {
     getArticleList();
   }, []);
@@ -45,7 +58,13 @@ export function ArticleProvider({ children }) {
   return (
     <>
       <ArticleContext.Provider
-        value={{ createArticle, articleList, setArticleList, getArticleList }}
+        value={{
+          createArticle,
+          articleList,
+          setArticleList,
+          getArticleList,
+          updateArticle,
+        }}
       >
         {children}
       </ArticleContext.Provider>

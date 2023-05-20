@@ -3,9 +3,7 @@ import DashboardContainer from "../../components/DashboardContainer/DashboardCon
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import ArticleContext from "../../context/ArticleContext";
 import BlogContext from "../../context/BlogContext";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { AiTwotoneSetting } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import DashArticleList from "../../components/DashArticleList/DashArticleList";
 export default function DashArticles() {
   const { articleList } = useContext(ArticleContext);
   const { userList } = useContext(BlogContext);
@@ -16,10 +14,11 @@ export default function DashArticles() {
       setSpinner(false);
     }, 300);
   }, []);
+
   return (
     <>
       <DashboardContainer>
-        <div className="w-full grid grid-cols-[3fr,2fr,1fr,auto] items-center justify-items-start relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md">
+        <div className="w-full grid grid-cols-[3fr,2fr,1fr,1fr,2.5%] items-center justify-items-start relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md">
           <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
             Title
           </div>
@@ -28,6 +27,12 @@ export default function DashArticles() {
           </div>
           <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
             Date of publication
+          </div>
+          <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
+            Last edit
+          </div>
+          <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
+            Edited
           </div>
         </div>
         {spinner ? (
@@ -48,48 +53,20 @@ export default function DashArticles() {
               const formattedDate = new Date(
                 art.createdAt.seconds * 1000
               ).toLocaleString();
+              const editedFormattedDate = new Date(
+                art.lastEdit.seconds * 1000
+              ).toLocaleString();
+              console.log(editedFormattedDate);
               const author = userList.find((user) => user.id === art.author);
 
               return (
-                <Link
-                  to={`/articles/${art.id}`}
+                <DashArticleList
                   key={art.id}
-                  className="grid grid-cols-[3fr,2fr,1fr,auto] items-center justify-items-start bg-slate-100 hover:bg-slate-200 relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md transition-all duration-300 origin-center"
-                >
-                  <div>
-                    <p className="text-sm text-slate-500 font-medium py-2">
-                      {art.title}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-500 font-medium flex gap-2 justify-center items-center">
-                      {author.picture === "" ? (
-                        <div className="w-[2.25em] h-[2.25em] rounded-full bg-yellow-500 flex justify-center items-center">
-                          <p className="text-md text-white uppercase font-bold flex justify-center items-center">
-                            {author.firstName === "" || author.lastName === ""
-                              ? author.email.slice(0, 1)
-                              : author.firstName.slice(0, 1) +
-                                author.lastName.slice(0, 1)}
-                          </p>
-                        </div>
-                      ) : (
-                        <img
-                          src={author.picture}
-                          alt=""
-                          className="w-[2.25em] h-[2.25em] rounded-full object-cover"
-                        />
-                      )}
-                      <p>
-                        {author.firstName} {author.lastName}
-                      </p>
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-500 font-medium">
-                      {formattedDate}
-                    </p>
-                  </div>
-                </Link>
+                  art={art}
+                  formattedDate={formattedDate}
+                  editedFormattedDate={editedFormattedDate}
+                  author={author}
+                />
               );
             })}
           </div>

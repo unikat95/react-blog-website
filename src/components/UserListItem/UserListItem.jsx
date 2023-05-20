@@ -88,8 +88,6 @@ export default function UserListItem({ el }) {
       <Modal
         confirm="Confirm"
         cancel="Cancel"
-        user={el}
-        userId={el.id}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       >
