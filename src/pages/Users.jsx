@@ -26,7 +26,6 @@ export default function Users() {
             </Link>
           ))}
         </div>
-        <Outlet />
       </Container>
     </>
   );

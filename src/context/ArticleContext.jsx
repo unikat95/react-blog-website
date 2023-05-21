@@ -14,6 +14,8 @@ export function ArticleProvider({ children }) {
   const { setLoading } = useContext(BlogContext);
   const [articleList, setArticleList] = useState([]);
   const articlesCollectionRef = collection(db, "articles");
+  const [modalSize, setModalSize] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const createArticle = async ({ articleData }) => {
     setLoading(true);
@@ -64,6 +66,10 @@ export function ArticleProvider({ children }) {
           setArticleList,
           getArticleList,
           updateArticle,
+          modalSize,
+          setModalSize,
+          isModalOpen,
+          setIsModalOpen,
         }}
       >
         {children}

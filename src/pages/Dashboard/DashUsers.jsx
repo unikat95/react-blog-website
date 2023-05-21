@@ -25,16 +25,16 @@ export default function DashUsers() {
     <>
       <DashboardContainer>
         <div className="grid grid-cols-[4fr,1fr,auto] md:grid-cols-[2fr,1fr,1fr,1fr,auto] lg:grid-cols-[2fr,1fr,1fr,1fr,1fr,auto] xl:grid-cols-[3fr,2fr,2fr,2fr,2fr,4fr,auto] items-center justify-items-start relative gap-2 px-2 py-4 md:py-3 lg:py-2 rounded-md">
-          <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
-            email
+          <div className="flex text-[.70rem] font-black text-slate-500 uppercase">
+            Email
+          </div>
+          <div className="flex text-[.70rem] font-black text-slate-500 uppercase">
+            Photo
           </div>
           <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
-            photo
-          </div>
-          <div className="md:flex text-[.70rem] font-black text-slate-500 uppercase">
             First name
           </div>
-          <div className="md:flex text-[.70rem] font-black text-slate-500 uppercase">
+          <div className="hidden md:flex text-[.70rem] font-black text-slate-500 uppercase">
             Last name
           </div>
           <div className="hidden lg:flex text-[.70rem] font-black text-slate-500 uppercase">

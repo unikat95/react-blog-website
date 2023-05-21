@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { AiFillCheckCircle } from "react-icons/ai";
 
@@ -7,6 +7,7 @@ import ArticleContext from "../../context/ArticleContext";
 import BlogContext from "../../context/BlogContext";
 import Button from "../../components/Button/Button";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import JoditEditor from "jodit-react";
 
 export default function DashCreateArticle() {
   const { createArticle, getArticleList } = useContext(ArticleContext);
@@ -16,6 +17,7 @@ export default function DashCreateArticle() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(false);
+  const editor = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,14 +82,11 @@ export default function DashCreateArticle() {
               </div>
               <div className="w-full flex flex-col gap-1">
                 <label htmlFor="text">Text:</label>
-                <textarea
-                  type="text"
-                  name="text"
-                  id="text"
-                  rows={5}
+                <JoditEditor
+                  ref={editor}
                   value={text}
-                  className="bg-slate-100 p-2 focus:outline-none"
-                  onChange={(e) => setText(e.target.value)}
+                  onChange={(newText) => setText(newText)}
+                  className="dark:text-slate-900"
                   required
                 />
               </div>

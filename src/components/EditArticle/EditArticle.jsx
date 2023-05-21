@@ -1,24 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+
+import { AiFillCheckCircle, AiFillEye } from "react-icons/ai";
+import { MdSaveAs } from "react-icons/md";
+
+import JoditEditor from "jodit-react";
+import { db } from "../../config/firebase";
+import { useParams } from "react-router-dom";
+import { serverTimestamp } from "firebase/firestore";
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import Button from "../Button/Button";
-import { useParams } from "react-router-dom";
 import ArticleContext from "../../context/ArticleContext";
-import { serverTimestamp } from "firebase/firestore";
-import { db } from "../../config/firebase";
-import { AiFillCheckCircle } from "react-icons/ai";
+import BlogContext from "../../context/BlogContext";
+import LoadingProfile from "../LoadingProfile/LoadingProfile";
+import PreviewArticle from "../PreviewArticle/PreviewArticle";
 
 export default function EditArticle() {
-  const { articleList, updateArticle } = useContext(ArticleContext);
+  const { articleList, updateArticle, modalSize, setModalSize } =
+    useContext(ArticleContext);
+  const { isProfileLoading } = useContext(BlogContext);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { editId } = useParams();
   const article = articleList.find((art) => art.id === editId);
   const [artTitle, setArtTitle] = useState(article.title);
   const [artImage, setArtImage] = useState(article.image);
   const [artText, setArtText] = useState(article.text);
+  const editor = useRef(null);
 
-  //   const editedArticleRef2 = doc(db, "articles", article.id);
   const editedArticleRef = db.collection("articles").doc(article.id);
 
   const handleSubmit = async (e) => {
@@ -65,13 +76,17 @@ export default function EditArticle() {
     return () => clearInterval(inter);
   }, []);
 
+  if (isProfileLoading) return <LoadingProfile />;
+
+  console.log(editedArticleRef);
+
   return (
     <DashboardContainer>
-      <div className="w-full h-full flex flex-col gap-10 p-3 md:p-10 overflow-auto">
+      <div className="w-full h-auto max-h-[78dvh] flex flex-col gap-10 p-3 md:p-5 md:py-10">
         <div>
-          <p>Edit article:</p>
+          <p className="px-5">Edit:</p>
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full overflow-auto px-5">
           <form
             onSubmit={handleSubmit}
             className="w-full h-full flex flex-col gap-5 items-end"
@@ -104,15 +119,11 @@ export default function EditArticle() {
             </div>
             <div className="w-full flex flex-col gap-1">
               <label htmlFor="text">Text:</label>
-              <textarea
-                type="text"
-                name="text"
-                id="text"
-                rows={13}
+              <JoditEditor
+                ref={editor}
                 value={artText}
-                onChange={(e) => setArtText(e.target.value)}
-                disabled={loading}
-                className="bg-slate-100 p-2 focus:outline-none rounded-md"
+                onChange={(newText) => setArtText(newText)}
+                className="dark:text-slate-900"
                 required
               />
             </div>
@@ -127,11 +138,21 @@ export default function EditArticle() {
                   </div>
                 </div>
               )}
-              <Button value={"Edit post"} disabled={message} />
+            </div>
+            <div className="absolute top-[7rem] md:top-[8rem] lg:top-[9rem] xl:top-[10rem] right-[2rem] md:right-[3rem] lg:right-[4rem] xl:right-[5em] flex gap-2">
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className="bg-slate-600 hover:bg-slate-700 text-slate-100 flex justify-center items-center gap-1 px-4 py-2 rounded-md"
+              >
+                <AiFillEye size="22" />
+                <p>Preview</p>
+              </button>
+              <Button value={"Save"} disabled={message} Icon={MdSaveAs} />
             </div>
             <div
               className={`w-auto rounded-md shadow-sm absolute top-10 left-[50%] translate-x-[-50%] flex overflow-hidden transition-transform z-[9999] ${
-                message ? "translate-y-0" : "translate-y-[-200%]"
+                message ? "translate-y-0" : "translate-y-[-50dvh]"
               }`}
             >
               <div className="w-auto p-4 bg-lime-400 text-lime-700">
@@ -142,6 +163,15 @@ export default function EditArticle() {
               </p>
             </div>
           </form>
+          <PreviewArticle
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            modalSize={modalSize}
+            setModalSize={setModalSize}
+            artTitle={artTitle}
+            artImage={artImage}
+            artText={artText}
+          />
         </div>
       </div>
     </DashboardContainer>

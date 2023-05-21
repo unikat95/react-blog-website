@@ -9,10 +9,14 @@
 @layer components {
 
     body {
-        background: #f1f1f1;
+        background: rgb(244,244,245);
         font-family: 'Poppins', sans-serif;
         overflow-x: hidden;
         font-size: 16px;
+    }
+
+    strong {
+        font-size: 1.5rem;
     }
 
     .loading-animation {

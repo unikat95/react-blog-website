@@ -43,7 +43,7 @@ export default function Navbar({ refNavbar }) {
         <nav
           ref={refNavbar}
           className={`w-full flex justify-center items-center ${
-            !scroll ? "bg-white py-3" : "py-7"
+            !scroll ? "bg-white py-3 shadow-sm" : "py-7"
           } fixed top-0 left-0 px-5 xl:px-0 z-[99] duration-300`}
         >
           <div className="w-full md:max-w-[1300px] flex justify-between items-center">

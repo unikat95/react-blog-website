@@ -28,7 +28,7 @@ export default function Root() {
   }, [location, setShowDropdown]);
 
   return (
-    <div className="w-full h-screen flex items-start justify-center relative">
+    <div className="w-full h-screen flex items-start bg-zinc-100 justify-center relative">
       {loading && <LoadingBar />}
       <Navbar refNavbar={dropdownRef} />
       <Outlet />

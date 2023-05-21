@@ -43,6 +43,7 @@ export const BlogProvider = ({ children }) => {
       about: "",
       completed: false,
       picture: "",
+      role: "User",
     };
     await setDoc(doc(db, "users", userId), userData);
     setLoading(false);
@@ -85,14 +86,6 @@ export const BlogProvider = ({ children }) => {
     getUserList();
   }, []);
 
-  const openDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
-
-  const closeDropdown = () => {
-    setShowDropdown(false);
-  };
-
   useEffect(() => {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -127,6 +120,14 @@ export const BlogProvider = ({ children }) => {
       unsubscribe();
     };
   }, [user]);
+
+  const openDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+  };
 
   return (
     <>

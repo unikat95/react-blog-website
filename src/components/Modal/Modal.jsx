@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import ArticleContext from "../../context/ArticleContext";
 
 export default function Modal({
   children,
@@ -9,11 +10,18 @@ export default function Modal({
   action,
   id,
 }) {
+  const { modalSize } = useContext(ArticleContext);
   return (
     <>
       {isModalOpen && (
         <div className="w-full h-full flex justify-center items-center absolute top-0 left-0 z-[990]">
-          <div className="w-auto max-w-[100%] md:max-w-[85%] max-h-[100%] md:max-h-[80%] flex flex-col justify-between items-end gap-12 p-3 md:p-5 bg-white md:rounded-md relative shadow-sm ">
+          <div
+            className={`w-full max-w-[100%]  ${
+              modalSize
+                ? "md:max-w-[100%] max-h-[100%]"
+                : "md:max-w-[85%] md:max-h-[80%] "
+            } max-h-[100%] flex flex-col justify-between items-end gap-12 p-3 md:p-5 bg-white md:rounded-md relative shadow-sm`}
+          >
             {children}
             <div className="flex gap-2">
               <button

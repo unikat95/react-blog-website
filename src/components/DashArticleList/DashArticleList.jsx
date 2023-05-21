@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
-import {
-  AiFillCloseCircle,
-  AiFillEdit,
-  AiFillDelete,
-  AiFillCheckCircle,
-} from "react-icons/ai";
+import { AiFillCheckCircle } from "react-icons/ai";
 import { MdDoNotDisturbOn } from "react-icons/md";
 
-import { Link } from "react-router-dom";
-import Modal from "../Modal/Modal";
-import Author from "../Author/Author";
+import ArticleContext from "../../context/ArticleContext";
+import PreviewArticle from "../PreviewArticle/PreviewArticle";
 
 export default function DashArticleList({
   art,
@@ -19,8 +13,8 @@ export default function DashArticleList({
   author,
   deleteArticle,
 }) {
+  const { modalSize, setModalSize } = useContext(ArticleContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   return (
     <>
@@ -77,65 +71,14 @@ export default function DashArticleList({
           </p>
         </div>
       </button>
-      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <div className="w-full justify-between items-center flex gap-2">
-          <div className="flex gap-2 justify-center items-center">
-            <Link
-              to={`/dashboard/edit-article/${art.id}`}
-              className="bg-slate-100 hover:bg-slate-800 text-slate-800 hover:text-slate-100 px-2 md:px-4 py-2 rounded-md flex justify-center items-center gap-1"
-            >
-              <AiFillEdit size="24" />
-              <p>Edit</p>
-            </Link>
-            <button
-              onClick={() => setDeleteModalOpen(true)}
-              className="bg-slate-100 hover:bg-slate-800 text-slate-800 hover:text-slate-100 px-4 py-2 rounded-md flex justify-center items-center gap-1"
-            >
-              <AiFillDelete size="24" />
-              <p>Delete</p>
-            </button>
-            <Modal
-              isModalOpen={deleteModalOpen}
-              setIsModalOpen={setDeleteModalOpen}
-              confirm={"Confirm"}
-              cancel={"Cancel"}
-              action={deleteArticle}
-              id={art.id}
-            >
-              <p>
-                Are you sure you want to delete the article? After deletion, any
-                data will be completely lost
-              </p>
-            </Modal>
-          </div>
-          <div>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="bg-slate-100 hover:bg-slate-800 text-slate-800 hover:text-slate-100 px-4 py-2 rounded-md flex justify-center items-center gap-1"
-            >
-              <AiFillCloseCircle size="24" />
-            </button>
-          </div>
-        </div>
-        <div className="w-full h-full flex flex-col gap-5 px-2 md:px-5 overflow-auto">
-          <div className="w-full h-auto flex flex-col justify-start items-center gap-10 rounded-md">
-            <Link to={`/users/${author.id}`}>
-              <Author
-                author={author}
-                direction={"flex-col"}
-                align={"items-center"}
-              />
-            </Link>
-            <h1 className="text-3xl text-slate-700 font-bold">{art.title}</h1>
-            <img
-              src={art.image}
-              alt=""
-              className="w-full h-full max-h-[23em] object-cover rounded-lg"
-            />
-            <p>{art.text}</p>
-          </div>
-        </div>
-      </Modal>
+      <PreviewArticle
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        modalSize={modalSize}
+        setModalSize={setModalSize}
+        article={art}
+        deleteArticle={deleteArticle}
+      />
     </>
   );
 }
