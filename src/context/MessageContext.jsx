@@ -34,13 +34,32 @@ export function MessageProvider({ children }) {
     }
   };
 
+  const updateMessage = (updatedMessage) => {
+    setMessageList((prevList) => {
+      const updatedList = prevList.map((msg) => {
+        if (msg.id === updatedMessage.id) {
+          return updatedMessage;
+        }
+        return msg;
+      });
+      return updatedList;
+    });
+  };
+
   useEffect(() => {
     getMessageList();
   }, []);
 
   return (
     <MessageContext.Provider
-      value={{ message, setMessage, sendMessage, getMessageList, messageList }}
+      value={{
+        message,
+        setMessage,
+        sendMessage,
+        getMessageList,
+        messageList,
+        updateMessage,
+      }}
     >
       {children}
     </MessageContext.Provider>

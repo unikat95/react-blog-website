@@ -22,6 +22,7 @@ export default function SendMessage() {
       title: title,
       message: text,
       to: userId,
+      replies: [],
     };
     await sendMessage({ messageData });
     setMessage(true);
