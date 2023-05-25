@@ -90,7 +90,7 @@ export default function Articles() {
                   </Link>
                   <div>
                     <Link
-                      to={`/users/${art.author}`}
+                      to={`/articles/${art.id}`}
                       className="underline text-slate-600 hover:text-slate-900 flex justify-center items-center gap-1"
                     >
                       <p>Read more</p> <GoLinkExternal />

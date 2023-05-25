@@ -6,6 +6,7 @@ import BlogContext from "../../context/BlogContext";
 import Logo from "../Logo/Logo";
 import UserProfile from "../UserProfile/UserProfile";
 import { IoMdArrowDropdown } from "react-icons/io";
+import MessageContext from "../../context/MessageContext";
 
 export default function Navbar({ refNavbar }) {
   const { user, logout } = useContext(BlogContext);
@@ -37,6 +38,11 @@ export default function Navbar({ refNavbar }) {
     navigate("/account/signin");
   };
 
+  const handleCloseMenu = () => {
+    setOpen(false);
+    setProfileOpen(false);
+  };
+
   return (
     <>
       {showNavbar && (
@@ -57,6 +63,7 @@ export default function Navbar({ refNavbar }) {
                 <Link
                   to="/"
                   className="w-full bg-slate-100 flex px-2 py-4 text-xl text-slate-500 font-bold uppercase md:w-auto md:text-slate-700 md:bg-transparent md:capitalize md:text-base md:font-normal"
+                  onClick={handleCloseMenu}
                 >
                   Home
                 </Link>
@@ -65,6 +72,7 @@ export default function Navbar({ refNavbar }) {
                 <Link
                   to="/articles"
                   className="w-full bg-slate-100 flex px-2 py-4 text-xl text-slate-500 font-bold uppercase md:text-slate-700 md:bg-transparent md:capitalize md:text-base md:font-normal"
+                  onClick={handleCloseMenu}
                 >
                   Articles
                 </Link>
@@ -73,6 +81,7 @@ export default function Navbar({ refNavbar }) {
                 <Link
                   to="/users"
                   className="w-full bg-slate-100 flex px-2 py-4 text-xl text-slate-500 font-bold uppercase md:text-slate-700 md:bg-transparent md:capitalize md:text-base md:font-normal"
+                  onClick={handleCloseMenu}
                 >
                   Users
                 </Link>
@@ -98,18 +107,21 @@ export default function Navbar({ refNavbar }) {
                     <Link
                       to="/profile"
                       className="w-full bg-slate-200 flex px-2 py-2 text-lg text-slate-500 font-medium uppercase mt-1"
+                      onClick={handleCloseMenu}
                     >
                       Profile
                     </Link>
                     <Link
                       to="/"
                       className="w-full bg-slate-200 flex px-2 py-2 text-lg text-slate-500 font-medium uppercase mt-1"
+                      onClick={handleCloseMenu}
                     >
                       Settings
                     </Link>
                     <Link
                       to="/dashboard"
                       className="w-full bg-slate-200 flex px-2 py-2 text-lg text-slate-500 font-medium uppercase mt-1"
+                      onClick={handleCloseMenu}
                     >
                       Dashboard
                     </Link>
@@ -134,7 +146,7 @@ export default function Navbar({ refNavbar }) {
               )}
               {!user && (
                 <>
-                  <li className="w-full md:w-auto px-5 md:px-0 mt-24 md:mt-0 flex">
+                  <li className="w-full md:w-auto px-5 md:px-0 md:mt-0 flex">
                     <Link
                       to="account/signin"
                       className="w-full bg-slate-100 flex px-2 py-4 text-xl text-slate-500 font-bold uppercase md:text-slate-700 md:bg-transparent md:capitalize md:text-base md:font-normal"
@@ -142,10 +154,10 @@ export default function Navbar({ refNavbar }) {
                       Account
                     </Link>
                   </li>
-                  <li className="w-full md:w-auto px-5 md:px-0 mt-24 md:mt-0 flex">
+                  <li className="w-full md:w-auto px-5 md:px-0 md:mt-0 flex">
                     <Link
                       to="account/signup"
-                      className="bg-gradient-to-tr from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-md text-sm"
+                      className="w-full bg-gradient-to-tr from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-4 md:py-2 rounded-md text-md md:text-base font-medium md:font-normal text-center mt-10 md:mt-0"
                     >
                       Sign Up
                     </Link>

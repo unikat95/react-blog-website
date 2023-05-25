@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 import LoadingBar from "./components/LoadingBar/LoadingBar";
 import BlogContext from "./context/BlogContext";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 export default function Root() {
   const { loading, setShowDropdown } = useContext(BlogContext);
@@ -30,6 +31,7 @@ export default function Root() {
   return (
     <div className="w-full h-screen flex items-start bg-zinc-100 justify-center relative">
       {loading && <LoadingBar />}
+      <ScrollToTop />
       <Navbar refNavbar={dropdownRef} />
       <Outlet />
     </div>

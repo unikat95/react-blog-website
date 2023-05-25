@@ -21,9 +21,13 @@ export default function PreviewArticle({
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   return (
-    <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+    <Modal
+      isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      width={"w-full"}
+    >
       <div className="w-full justify-between items-center flex gap-2">
-        <div className="flex gap-2 justify-center items-center">
+        <div className="w-auto flex gap-2 justify-center items-center">
           {deleteArticle && (
             <>
               <Link
@@ -48,6 +52,7 @@ export default function PreviewArticle({
                 cancel={"Cancel"}
                 action={deleteArticle}
                 id={article.id}
+                width={"auto"}
               >
                 <p>
                   Are you sure you want to delete the article? After deletion,
@@ -77,9 +82,7 @@ export default function PreviewArticle({
         </div>
       </div>
       <div className="w-full h-full flex flex-col justify-start items-center gap-5 px-2 md:px-5 overflow-auto">
-        <div
-          className={`w-full max-w-[900px] h-auto flex flex-col justify-start items-center gap-10 rounded-md`}
-        >
+        <div className="w-full max-w-[1000px] h-auto flex flex-col justify-start items-center gap-10 mb-20">
           <h1 className="text-3xl text-slate-700 font-bold">
             {artTitle ? artTitle : article.title}
           </h1>

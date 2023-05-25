@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { AiFillSetting } from "react-icons/ai";
+import { BiMessageSquareDots } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 import { IoMdLogOut } from "react-icons/io";
 import { RiDashboardFill } from "react-icons/ri";
 import BlogContext from "../../context/BlogContext";
 import { auth, db } from "../../config/firebase";
+import LoadingProfile from "../LoadingProfile/LoadingProfile";
 
 export default function ProfileDropdown({ showDropdown, margin, marginRight }) {
-  const { logout, closeDropdown } = useContext(BlogContext);
+  const { logout, closeDropdown, incomingMessages, isProfileLoading } =
+    useContext(BlogContext);
   const [userRank, setUserRank] = useState({});
   const navigate = useNavigate();
   const currentUser = auth.currentUser;
@@ -58,12 +60,12 @@ export default function ProfileDropdown({ showDropdown, margin, marginRight }) {
         </li>
         <li className="w-full text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-700 group">
           <Link
-            to=""
+            to="/messages"
             className="py-2 px-5 border-b flex justify-start items-center gap-2"
             onClick={closeDropdown}
           >
-            <AiFillSetting className="text-gray-400" />
-            <p>Settings</p>
+            <BiMessageSquareDots className="text-gray-400" />
+            <p>Messages</p>
           </Link>
         </li>
         {userRank.rank === 999 && (

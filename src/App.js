@@ -8,6 +8,7 @@ import {
 
 import { BlogProvider } from "./context/BlogContext";
 import { ArticleProvider } from "./context/ArticleContext";
+import { MessageProvider } from "./context/MessageContext";
 
 import Root from "./Root";
 import Home from "./pages/Home";
@@ -27,6 +28,10 @@ import DashboardHome from "./pages/Dashboard/Home";
 import Article from "./components/Article/Article";
 import DashCreateArticle from "./pages/Dashboard/DashCreateArticle";
 import EditArticle from "./components/EditArticle/EditArticle";
+import Messages from "./pages/Messages";
+import SendMessage from "./components/SendMessage/SendMessage";
+import MessagesList from "./components/MessagesList/MessagesList";
+import MessageDetail from "./components/MessageDetail/MessageDetail";
 
 function App() {
   const router = createBrowserRouter(
@@ -41,6 +46,18 @@ function App() {
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="/messages"
+          element={
+            <ProtectedRoutes>
+              <Messages />
+            </ProtectedRoutes>
+          }
+        >
+          <Route index element={<MessagesList />} />
+          <Route path="send-message/:userId" element={<SendMessage />} />
+          <Route path=":msgId" element={<MessageDetail />} />
+        </Route>
         <Route
           path="/dashboard"
           element={
@@ -70,7 +87,9 @@ function App() {
   return (
     <BlogProvider>
       <ArticleProvider>
-        <RouterProvider router={router}></RouterProvider>
+        <MessageProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </MessageProvider>
       </ArticleProvider>
     </BlogProvider>
   );

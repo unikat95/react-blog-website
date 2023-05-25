@@ -13,7 +13,7 @@ export default function EditProfile({ profile, userRef, updateProfile }) {
   const [firstName, setFirstName] = useState(profile.firstName);
   const [lastName, setLastName] = useState(profile.lastName);
   const [selectedDate, setSelectedDate] = useState(
-    moment(profile.birthDate, "DD/MM/YYYY").toDate()
+    profile.birthDate ? moment(profile.birthDate, "DD/MM/YYYY").toDate() : null
   );
   const [about, setAbout] = useState(profile.about);
 

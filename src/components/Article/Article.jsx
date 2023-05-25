@@ -23,7 +23,7 @@ export default function Article() {
 
   return article ? (
     <Container>
-      <div className="w-full max-w-[1000px] bg-white py-16 px-14 h-auto flex flex-col justify-start items-center gap-10 rounded-lg shadow-sm mb-20">
+      <div className="w-full max-w-[1000px] h-auto flex flex-col justify-start items-center gap-10 mb-20">
         <Link to={`/users/${author.id}`}>
           <Author
             author={author}
@@ -40,7 +40,7 @@ export default function Article() {
           alt=""
           className="w-full h-full max-h-[23em] object-cover rounded-lg"
         />
-        <p className="text-lg text-slate-600 text-justify">
+        <p className="text-base md:text-lg text-slate-600 text-justify">
           {HTMLReactParser(article.text)}
         </p>
       </div>

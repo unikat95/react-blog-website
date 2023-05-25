@@ -2,7 +2,11 @@ import React from "react";
 
 import { FaUserEdit } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
+import { RiMailSendLine } from "react-icons/ri";
+
 import UserDetailSidebar from "../UserDetailSidebar/UserDetailSidebar";
+import { auth } from "../../config/firebase";
+import { Link } from "react-router-dom";
 
 export default function UserDetail({
   user,
@@ -10,6 +14,10 @@ export default function UserDetail({
   handleLogout,
   handleEditProfile,
 }) {
+  const currentUser = auth.currentUser;
+
+  console.log(currentUser);
+
   return (
     <>
       <div className="w-full flex flex-col justify-start items-start gap-5">
@@ -75,6 +83,17 @@ export default function UserDetail({
                 </p>
               </div>
             </div>
+            {currentUser && !handleLogout ? (
+              <div className="w-full flex justify-end items-end mt-2">
+                <Link
+                  to={`/messages/send-message/${user.id}`}
+                  className="flex justify-center items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-700 hover:text-slate-100 rounded-md"
+                >
+                  <RiMailSendLine />
+                  Send message
+                </Link>
+              </div>
+            ) : null}
             {handleLogout && (
               <div className="w-full flex items-center justify-end mt-2 gap-2">
                 <button

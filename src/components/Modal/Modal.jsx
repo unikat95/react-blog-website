@@ -9,6 +9,7 @@ export default function Modal({
   setIsModalOpen,
   action,
   id,
+  width,
 }) {
   const { modalSize } = useContext(ArticleContext);
   return (
@@ -16,7 +17,7 @@ export default function Modal({
       {isModalOpen && (
         <div className="w-full h-full flex justify-center items-center absolute top-0 left-0 z-[990]">
           <div
-            className={`w-full max-w-[100%]  ${
+            className={`${width} max-w-[100%]  ${
               modalSize
                 ? "md:max-w-[100%] max-h-[100%]"
                 : "md:max-w-[85%] md:max-h-[80%] "
