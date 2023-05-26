@@ -60,7 +60,7 @@ export default function ProfileDropdown({ showDropdown, margin, marginRight }) {
         </li>
         <li className="w-full text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-700 group">
           <Link
-            to="/messages"
+            to="/messages/incoming-messages"
             className="py-2 px-5 border-b flex justify-start items-center gap-2"
             onClick={closeDropdown}
           >

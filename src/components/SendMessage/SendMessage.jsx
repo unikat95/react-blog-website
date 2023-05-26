@@ -23,10 +23,11 @@ export default function SendMessage() {
       message: text,
       to: userId,
       replies: [],
+      written: new Date().toISOString(),
     };
     await sendMessage({ messageData });
     setMessage(true);
-    navigate("/messages");
+    navigate("/messages/incoming-messages");
     getMessageList();
   };
 

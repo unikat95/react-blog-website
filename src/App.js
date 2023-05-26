@@ -32,6 +32,9 @@ import Messages from "./pages/Messages";
 import SendMessage from "./components/SendMessage/SendMessage";
 import MessagesList from "./components/MessagesList/MessagesList";
 import MessageDetail from "./components/MessageDetail/MessageDetail";
+import SentMessages from "./components/SentMessages/SentMessages";
+import IncomingMessage from "./components/IncomingMessage/IncomingMessage";
+import Archive from "./components/Archive/Archive";
 
 function App() {
   const router = createBrowserRouter(
@@ -50,13 +53,15 @@ function App() {
           path="/messages"
           element={
             <ProtectedRoutes>
-              <Messages />
+              <MessagesList />
             </ProtectedRoutes>
           }
         >
-          <Route index element={<MessagesList />} />
+          <Route path="incoming-messages" index element={<IncomingMessage />} />
+          <Route path="sent-messages" element={<SentMessages />} />
+          <Route path="archive" element={<Archive />} />
           <Route path="send-message/:userId" element={<SendMessage />} />
-          <Route path=":msgId" element={<MessageDetail />} />
+          <Route path="msg/:msgId" element={<MessageDetail />} />
         </Route>
         <Route
           path="/dashboard"

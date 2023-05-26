@@ -83,7 +83,7 @@ export default function UserDetail({
                 </p>
               </div>
             </div>
-            {currentUser && !handleLogout ? (
+            {currentUser && !handleLogout && currentUser.uid !== user.id ? (
               <div className="w-full flex justify-end items-end mt-2">
                 <Link
                   to={`/messages/send-message/${user.id}`}
