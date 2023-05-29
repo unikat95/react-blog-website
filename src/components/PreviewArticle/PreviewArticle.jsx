@@ -54,10 +54,10 @@ export default function PreviewArticle({
                 id={article.id}
                 width={"auto"}
               >
-                <p>
+                <div>
                   Are you sure you want to delete the article? After deletion,
                   any data will be completely lost
-                </p>
+                </div>
               </Modal>
             </>
           )}
@@ -91,9 +91,9 @@ export default function PreviewArticle({
             alt=""
             className="w-full h-full max-h-[23em] object-cover rounded-lg"
           />
-          <p className="text-lg text-justify">
+          <div className="text-lg text-justify">
             {HTMLReactParser(artText ? artText : article.text)}
-          </p>
+          </div>
         </div>
       </div>
     </Modal>

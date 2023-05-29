@@ -58,9 +58,7 @@ export default function Articles() {
               <div className="w-full h-full flex flex-col justify-between items-start gap-3 p-5">
                 <div className="flex flex-col gap-3">
                   <div>
-                    <p className="text-xs text-slate-500 uppercase font-medium">
-                      Posted: {formattedDate}
-                    </p>
+                    <div>Posted: {formattedDate}</div>
                     <Link
                       to={`/articles/${art.id}`}
                       className="text-slate-700 font-bold hover:underline"
@@ -69,11 +67,11 @@ export default function Articles() {
                     </Link>
                   </div>
                   <div>
-                    <p className="text-slate-600 text-base">
+                    <div className="text-slate-600 text-base">
                       {art.text.length > 200
                         ? HTMLReactParser(art.text.slice(0, 200) + "...")
                         : HTMLReactParser(art.text)}
-                    </p>
+                    </div>
                   </div>
                 </div>
                 <div className="w-full flex justify-between items-center">
@@ -81,19 +79,19 @@ export default function Articles() {
                     to={`/users/${art.author}`}
                     className="flex justify-center items-center gap-2"
                   >
-                    <p className="text-slate-600 text-sm font-medium">
+                    <div className="text-slate-600 text-sm font-medium">
                       Author:
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                       {author.firstName} {author.lastName}
-                    </p>
+                    </div>
                   </Link>
                   <div>
                     <Link
                       to={`/articles/${art.id}`}
                       className="underline text-slate-600 hover:text-slate-900 flex justify-center items-center gap-1"
                     >
-                      <p>Read more</p> <GoLinkExternal />
+                      <div>Read more</div> <GoLinkExternal />
                     </Link>
                   </div>
                 </div>
@@ -107,7 +105,7 @@ export default function Articles() {
             className="flex justify-center items-center gap-1 hover:underline"
           >
             {loading && <LoadingSpinner width="w-[1em]" height="h-[1em]" />}
-            <p className="ml-2">Show more</p>{" "}
+            <div className="ml-2">Show more</div>
             <MdKeyboardDoubleArrowDown size="18" />
           </button>
         )}

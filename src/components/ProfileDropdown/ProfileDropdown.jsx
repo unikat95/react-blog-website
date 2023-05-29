@@ -5,17 +5,24 @@ import { BiMessageSquareDots } from "react-icons/bi";
 import { BsPersonCircle } from "react-icons/bs";
 import { IoMdLogOut } from "react-icons/io";
 import { RiDashboardFill } from "react-icons/ri";
+
 import BlogContext from "../../context/BlogContext";
 import { auth, db } from "../../config/firebase";
-import LoadingProfile from "../LoadingProfile/LoadingProfile";
 
-export default function ProfileDropdown({ showDropdown, margin, marginRight }) {
-  const { logout, closeDropdown, incomingMessages, isProfileLoading } =
-    useContext(BlogContext);
+export default function ProfileDropdown({
+  showDropdown,
+  margin,
+  marginRight,
+  messageList,
+}) {
+  const { logout, closeDropdown, user } = useContext(BlogContext);
   const [userRank, setUserRank] = useState({});
   const navigate = useNavigate();
   const currentUser = auth.currentUser;
   const userRef = db.collection("users").doc(currentUser.uid);
+
+  const incMsg = messageList.filter((msg) => msg.to === user.uid);
+  const unreadMsgTo = incMsg.filter((msg) => msg.unreadTo === true);
 
   const userDetail = async () => {
     try {
@@ -66,6 +73,13 @@ export default function ProfileDropdown({ showDropdown, margin, marginRight }) {
           >
             <BiMessageSquareDots className="text-gray-400" />
             <p>Messages</p>
+            {unreadMsgTo.length > 0 && (
+              <span
+                className={`absolute w-[2em] h-[1.7em] left-3 bg-red-500 text-white text-xs font-medium rounded-md flex justify-center items-center`}
+              >
+                {unreadMsgTo.length > 9 ? "9+" : unreadMsgTo.length}
+              </span>
+            )}
           </Link>
         </li>
         {userRank.rank === 999 && (

@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
+
+import BlogContext from "../../context/BlogContext";
+import MessageContext from "../../context/MessageContext";
 import Button from "../Button/Button";
 import { RiMailSendLine } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router-dom";
-import MessageContext from "../../context/MessageContext";
-import BlogContext from "../../context/BlogContext";
+import { serverTimestamp } from "firebase/firestore";
 
 export default function SendMessage() {
-  const { setMessage, sendMessage, getMessageList } =
+  const { setMessage, sendMessage, getMessageList, updateMessage } =
     useContext(MessageContext);
   const { setLoading, user } = useContext(BlogContext);
   const { userId } = useParams();
@@ -23,7 +25,9 @@ export default function SendMessage() {
       message: text,
       to: userId,
       replies: [],
-      written: new Date().toISOString(),
+      written: serverTimestamp(),
+      unreadFrom: false,
+      unreadTo: true,
     };
     await sendMessage({ messageData });
     setMessage(true);

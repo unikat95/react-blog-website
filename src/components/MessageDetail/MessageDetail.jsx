@@ -1,15 +1,10 @@
-import React, { useContext, useState } from "react";
-
-import { IoIosArrowRoundBack } from "react-icons/io";
+import React, { useContext, useEffect, useState } from "react";
 import { FaReply } from "react-icons/fa";
-import { AiFillCloseCircle } from "react-icons/ai";
-
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MessageContext from "../../context/MessageContext";
 import BlogContext from "../../context/BlogContext";
 import Button from "../Button/Button";
 import { db } from "../../config/firebase";
-import Container from "../Container/Container";
 
 export default function MessageDetail() {
   const { messageList, updateMessage } = useContext(MessageContext);
@@ -29,6 +24,29 @@ export default function MessageDetail() {
     minute: "2-digit",
   });
 
+  const [replies, setReplies] = useState(message.replies || []);
+
+  useEffect(() => {
+    const markMessageAsRead = async () => {
+      if (message.unreadTo && user.uid === message.to) {
+        await updateMessageAndReply({ unreadTo: false });
+      }
+      if (message.unreadFrom && user.uid === message.from) {
+        await updateMessageAndReply({ unreadFrom: false });
+      }
+    };
+    const updateMessageAndReply = async (update) => {
+      await replyMessageRef.update({ unreadTo: false, unreadFrom: false });
+      updateMessage({
+        ...message,
+        unreadTo: false,
+        unreadFrom: false,
+        ...update,
+      });
+    };
+    markMessageAsRead();
+  }, [message, replyMessageRef, updateMessage, user.uid]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,17 +62,21 @@ export default function MessageDetail() {
       { user: user.uid, msg: replyMsg, written: new Date().toISOString() },
     ];
 
-    await replyMessageRef.update({
-      replies: updatedReplies,
-    });
+    if (user.uid === message.to) {
+      await replyMessageRef.update({
+        replies: updatedReplies,
+        unreadFrom: true,
+      });
+    }
 
-    const updatedMessage = {
-      ...messageData,
-      id: snapshot.id,
-      replies: updatedReplies,
-    };
+    if (user.uid === message.from) {
+      await replyMessageRef.update({
+        replies: updatedReplies,
+        unreadTo: true,
+      });
+    }
 
-    updateMessage(updatedMessage);
+    setReplies(updatedReplies);
     setReply(false);
   };
 
@@ -92,7 +114,7 @@ export default function MessageDetail() {
             </div>
           </div>
           <div className="w-full flex flex-col justify-end items-end gap-5">
-            {message.replies.map((rep) => {
+            {replies.map((rep, index) => {
               const replyUser = userList.find((user) => user.id === rep.user);
               const replyDate = new Date(rep.written);
               const formattedDate = replyDate.toLocaleDateString("pl-PL", {
@@ -104,7 +126,7 @@ export default function MessageDetail() {
               });
               return (
                 <div
-                  key={rep.id}
+                  key={index}
                   className={`w-full flex flex-col ${
                     replyUser.id === user.uid && "items-end"
                   }`}
@@ -112,7 +134,7 @@ export default function MessageDetail() {
                   <div
                     className={`flex flex-col w-full ${
                       replyUser.id === user.uid
-                        ? "w-[97%] bg-slate-50 border-l-[5px] border-gray-400"
+                        ? "w-[95%] bg-slate-50 border-l-[5px] border-gray-400"
                         : "bg-white border-l-[5px] border-blue-400"
                     } p-5 rounded-lg shadow-sm relative gap-3`}
                   >
@@ -153,16 +175,6 @@ export default function MessageDetail() {
                 onSubmit={handleSubmit}
                 className="w-[80%] bg-white p-5 rounded-lg flex flex-col gap-5 items-end relative"
               >
-                <button
-                  onClick={() => setReply(false)}
-                  type="button"
-                  className="absolute top-4 right-5"
-                >
-                  <AiFillCloseCircle
-                    size="22"
-                    className="text-slate-600 hover:text-slate-950"
-                  />
-                </button>
                 <div className="w-full flex flex-col gap-2">
                   <label htmlFor="msg">Message:</label>
                   <textarea

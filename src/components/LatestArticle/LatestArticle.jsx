@@ -21,7 +21,7 @@ export default function LatestArticle({ art, formattedDate, author }) {
           />
         </Link>
         <div className="flex flex-col gap-1">
-          <h3 className="text-xs text-slate-500">Added: {formattedDate}</h3>
+          <p className="text-xs text-slate-500">Added: {formattedDate}</p>
           {art.title.length > 45 ? (
             <Tooltip
               content={art.title}
@@ -49,11 +49,11 @@ export default function LatestArticle({ art, formattedDate, author }) {
           )}
         </div>
         <div>
-          <p className="w-full text-base text-slate-600 text-justify">
+          <div className="w-full text-base text-slate-600 text-justify">
             {art.text.length > 150
               ? HTMLReactParser(art.text.slice(0, 150) + "...")
               : HTMLReactParser(art.text)}
-          </p>
+          </div>
         </div>
       </div>
       <Link to={`/users/${author.id}`}>

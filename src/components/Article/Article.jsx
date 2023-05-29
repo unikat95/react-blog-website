@@ -40,9 +40,9 @@ export default function Article() {
           alt=""
           className="w-full h-full max-h-[23em] object-cover rounded-lg"
         />
-        <p className="text-base md:text-lg text-slate-600 text-justify">
+        <div className="text-base md:text-lg text-slate-600 text-justify">
           {HTMLReactParser(article.text)}
-        </p>
+        </div>
       </div>
     </Container>
   ) : (

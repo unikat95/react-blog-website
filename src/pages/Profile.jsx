@@ -54,8 +54,6 @@ export default function Profile() {
     userDetail();
   }, []);
 
-  console.log(profile);
-
   return (
     <Container>
       <div

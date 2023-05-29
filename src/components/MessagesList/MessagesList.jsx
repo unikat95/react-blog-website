@@ -1,15 +1,23 @@
 import React, { useContext, useEffect } from "react";
 
-import { BsEnvelopeOpenFill } from "react-icons/bs";
 import { RiSendPlaneFill, RiSensorFill, RiMailSendFill } from "react-icons/ri";
 
 import { Link, Outlet, useLocation } from "react-router-dom";
 import MessageContext from "../../context/MessageContext";
 import Container from "../Container/Container";
+import BlogContext from "../../context/BlogContext";
 
 export default function MessagesList() {
-  const { message, setMessage, getMessageList } = useContext(MessageContext);
+  const { user } = useContext(BlogContext);
+  const { message, setMessage, getMessageList, messageList } =
+    useContext(MessageContext);
   const location = useLocation();
+
+  const incMsgTo = messageList.filter((msg) => msg.to === user.uid);
+  const unreadMsgTo = incMsgTo.filter((msg) => msg.unreadTo === true);
+
+  const incMsgFrom = messageList.filter((msg) => msg.from === user.uid);
+  const unreadMsgFrom = incMsgFrom.filter((msg) => msg.unreadFrom === true);
 
   useEffect(() => {
     getMessageList();
@@ -39,10 +47,13 @@ export default function MessagesList() {
                   size="18"
                   className={`text-slate-700 ${
                     location.pathname === "/messages/incoming-messages" &&
-                    "text-slate-200"
+                    "text-white"
                   }`}
                 />
-                <p>Incoming Messages</p>
+                <p>
+                  Incoming Messages{" "}
+                  {unreadMsgTo.length > 0 && `(${unreadMsgTo.length})`}
+                </p>
               </Link>
             </li>
             <li className="w-full flex">
@@ -57,10 +68,13 @@ export default function MessagesList() {
                   size="18"
                   className={`text-slate-700 ${
                     location.pathname === "/messages/sent-messages" &&
-                    "text-slate-200"
+                    "text-white"
                   }`}
                 />
-                <p>Sent Messages</p>
+                <p>
+                  Sent Messages{" "}
+                  {unreadMsgFrom.length > 0 && `(${unreadMsgFrom.length})`}
+                </p>
               </Link>
             </li>
             <li className="w-full flex">
@@ -74,8 +88,7 @@ export default function MessagesList() {
                 <RiSensorFill
                   size="18"
                   className={`text-slate-700 ${
-                    location.pathname === "/messages/archive" &&
-                    "text-slate-200"
+                    location.pathname === "/messages/archive" && "text-white"
                   }`}
                 />
                 <p>Archive</p>

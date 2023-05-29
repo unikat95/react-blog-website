@@ -6,10 +6,11 @@ import { db } from "../config/firebase";
 const MessageContext = createContext();
 
 export function MessageProvider({ children }) {
-  const { setLoading } = useContext(BlogContext);
+  const { setLoading, user } = useContext(BlogContext);
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState(false);
   const messagesCollectionRef = collection(db, "messages");
+  const incomingMessages = messageList.filter((msg) => msg.to === user?.uid);
 
   const sendMessage = async ({ messageData }) => {
     setLoading(true);
@@ -46,6 +47,21 @@ export function MessageProvider({ children }) {
     });
   };
 
+  const shouldDisplayDot = (message) => {
+    if (message.unreadTo && message.to === user.uid) {
+      return true;
+    }
+
+    if (message.unreadFrom && message.from === user.uid) {
+      const lastReply = message.replies[message.replies.length - 1];
+      if (lastReply && lastReply.user !== user.uid) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   useEffect(() => {
     getMessageList();
   }, []);
@@ -59,6 +75,8 @@ export function MessageProvider({ children }) {
         getMessageList,
         messageList,
         updateMessage,
+        incomingMessages,
+        shouldDisplayDot,
       }}
     >
       {children}

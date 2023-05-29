@@ -10,30 +10,26 @@ export default function SentMessages() {
   return (
     <>
       <div className="w-full flex flex-col gap-5">
-        <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-[1fr,2fr,3fr,1fr] gap-2 px-4">
-            <div>
-              <p className="text-xs text-slate-700 font-bold">From</p>
-            </div>
-            <div>
-              <p className="text-xs text-slate-700 font-bold">Title</p>
-            </div>
-            <div>
-              <p className="text-xs text-slate-700 font-bold">Message</p>
-            </div>
-            <div>
-              <p className="text-xs text-slate-700 font-bold">Date</p>
+        {sentMessages.length <= 0 ? (
+          <div>There are no messages to display.</div>
+        ) : (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              {sentMessages.map((msg) => {
+                const msgTo = userList.find((user) => user.id === msg.to);
+                return (
+                  <MessageItem
+                    msg={msg}
+                    msgUser={msgTo}
+                    userList={userList}
+                    toWhom={"To"}
+                    key={msg.id}
+                  />
+                );
+              })}
             </div>
           </div>
-          <div className="flex flex-col gap-1">
-            {sentMessages.map((msg) => {
-              const msgTo = userList.find((user) => user.id === msg.to);
-              return (
-                <MessageItem msg={msg} msgUser={msgTo} userList={userList} />
-              );
-            })}
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

@@ -23,21 +23,21 @@ export default function UserDetailSidebar({ userArticles }) {
                 className="flex flex-col bg-white hover:bg-indigo-50 p-5 gap-3 rounded-lg group"
               >
                 <div>
-                  <p className="text-xs text-blue-300 font-bold">
+                  <div className="text-xs text-blue-300 font-bold">
                     {formattedDate}
-                  </p>
+                  </div>
 
-                  <p className="text-slate-600 text-base font-bold group-hover:underline">
+                  <div className="text-slate-600 text-base font-bold group-hover:underline">
                     {art.title.length > 40
                       ? HTMLReactParser(art.title.slice(0, 40) + "...")
                       : HTMLReactParser(art.title)}
-                  </p>
+                  </div>
                 </div>
-                <p className="text-slate-600 text-sm font-base">
+                <div className="text-slate-600 text-sm font-base">
                   {art.text.length > 100
                     ? HTMLReactParser(art.text.slice(0, 100) + "...")
                     : HTMLReactParser(art.text)}
-                </p>
+                </div>
               </Link>
             );
           })}
