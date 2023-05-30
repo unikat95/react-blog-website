@@ -15,14 +15,9 @@ export default function MessageDetail() {
   const message = messageList.find((msg) => msg.id === msgId);
   const msgFrom = userList.find((user) => user.id === message.from);
   const replyMessageRef = db.collection("messages").doc(message.id);
-  const date = new Date(message.written);
-  const formattedDate = date.toLocaleDateString("pl-PL", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const formattedDate = new Date(
+    message.written.seconds * 1000
+  ).toLocaleString();
 
   const [replies, setReplies] = useState(message.replies || []);
 
@@ -84,7 +79,7 @@ export default function MessageDetail() {
     <>
       <div className="w-full flex flex-col gap-10 justify-start items-start">
         <div className="w-full flex flex-col gap-5">
-          <div className="w-full flex flex-col gap-5 bg-white rounded-lg p-5 shadow-sm border-l-[5px] border-blue-400">
+          <div className="w-full flex flex-col gap-5 bg-white rounded-lg p-5 shadow-sm border-l-[5px] border-yellow-400">
             <div className="text-xs flex gap-2 justify-start items-center">
               <div>
                 {msgFrom.picture === "" ? (
@@ -134,7 +129,7 @@ export default function MessageDetail() {
                   <div
                     className={`flex flex-col w-full ${
                       replyUser.id === user.uid
-                        ? "w-[95%] bg-slate-50 border-l-[5px] border-gray-400"
+                        ? "w-[93%] bg-slate-50 border-l-[5px] border-gray-400"
                         : "bg-white border-l-[5px] border-blue-400"
                     } p-5 rounded-lg shadow-sm relative gap-3`}
                   >

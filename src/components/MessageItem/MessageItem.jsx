@@ -12,78 +12,80 @@ export default function MessageItem({ msg, msgUser, toWhom }) {
     <>
       <Link
         to={`/messages/msg/${msg.id}`}
-        className={`grid grid-cols-[2fr,2fr,4fr,auto] gap-2 ${
+        className={`grid grid-cols-[2fr,5fr,auto] gap-10 ${
           isUnread ? "bg-emerald-100" : "bg-white"
-        } p-4 rounded-lg relative`}
+        } p-3 rounded-lg relative`}
       >
         {isUnread && (
-          <span className="absolute w-[.7rem] h-[.7rem] top-1 right-1 bg-emerald-400 rounded-full"></span>
+          <span className="absolute w-[.7rem] h-[.7rem] top-2 right-2 bg-emerald-400 rounded-full"></span>
         )}
         <div className="flex flex-col gap-1">
-          <p
+          <div
             className={`text-[.55rem] ${
               isUnread ? "text-emerald-600" : "text-slate-400"
             } uppercase font-black`}
           >
             {toWhom}
-          </p>
-          <p
-            className={`text-xs font-bold ${
+          </div>
+          <div
+            className={`text-sm font-medium ${
               isUnread ? "text-emerald-800" : "text-slate-500"
-            }`}
+            } flex justify-start items-center gap-2`}
           >
-            {msgUser.firstName} {msgUser.lastName}
-          </p>
+            <div>
+              <img
+                src={msgUser.picture}
+                alt=""
+                className="max-w-[1.75em] object-cover rounded-full"
+              />
+              {msgUser.picture === "" ? (
+                <span className="w-[2em] h-[2em] bg-gray-500 flex justify-center items-center rounded-full uppercase text-white font-bold">
+                  {msgUser.email.slice(0, 1)}
+                </span>
+              ) : (
+                <img
+                  src={msgUser.picture}
+                  alt=""
+                  className="w-[2em] h-[2em] rounded-full object-cover"
+                />
+              )}
+            </div>
+            <div>
+              {msgUser.firstName} {msgUser.lastName}
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-1">
-          <p
+          <div
             className={`text-[.55rem] ${
               isUnread ? "text-emerald-600" : "text-slate-400"
-            } uppercase font-black`}
+            } uppercase font-black `}
           >
             Title
-          </p>
-          <p
-            className={`text-xs font-bold ${
+          </div>
+          <div
+            className={`text-sm font-medium ${
               isUnread ? "text-emerald-800" : "text-slate-500"
             }`}
           >
             {msg.title}
-          </p>
+          </div>
         </div>
         <div className="flex flex-col gap-1">
-          <p
-            className={`text-[.55rem] ${
-              isUnread ? "text-emerald-600" : "text-slate-400"
-            } uppercase font-black`}
-          >
-            Message
-          </p>
-          <p
-            className={`text-xs font-bold ${
-              isUnread ? "text-emerald-800" : "text-slate-500"
-            }`}
-          >
-            {msg.message.length > 40
-              ? `${msg.message.slice(0, 40)}...`
-              : msg.message}
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <p
+          <div
             className={`text-[.55rem] ${
               isUnread ? "text-emerald-600" : "text-slate-400"
             } uppercase font-black`}
           >
             Date
-          </p>
-          <p
-            className={`text-xs font-bold ${
+          </div>
+          <div
+            className={`text-sm font-medium ${
               isUnread ? "text-emerald-800" : "text-slate-500"
             }`}
           >
             {formattedDate}
-          </p>
+          </div>
         </div>
       </Link>
     </>

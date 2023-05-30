@@ -27,6 +27,7 @@ export default function DashCreateArticle() {
       image: image,
       text: text,
       author: user.uid,
+      comments: [],
     };
     await createArticle({ articleData });
     getArticleList();

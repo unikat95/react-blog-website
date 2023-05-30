@@ -21,10 +21,10 @@ export default function UserDetail({
     <>
       <div className="w-full flex flex-col justify-start items-start gap-5">
         <h1>User profile:</h1>
-        <div className="w-full flex flex-col justify-start items-center bg-white p-5 gap-5 rounded-xl shadow-sm">
+        <div className="w-full flex flex-col justify-start items-center bg-white p-5 md:p-10 gap-5 md:gap-10 rounded-xl shadow-sm">
           <div className="border-[10px] border-slate-100 rounded-full">
             {user.picture === "" ? (
-              <div className="w-[8em] h-[8em] bg-yellow-500 rounded-full flex justify-center items-center">
+              <div className="w-[11em] h-[11em] bg-yellow-500 rounded-full flex justify-center items-center">
                 <div className="text-7xl text-white uppercase font-bold flex justify-center items-center">
                   {user.firstName === "" || user.lastName === ""
                     ? user.email.slice(0, 1)
@@ -35,7 +35,7 @@ export default function UserDetail({
               <img
                 src={user.picture}
                 alt=""
-                className="rounded-full w-[8em] h-[8em] object-cover"
+                className="rounded-full w-[11em] h-[11em] object-cover"
               />
             )}
           </div>
@@ -56,15 +56,15 @@ export default function UserDetail({
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="w-full flex flex-col gap-1">
-                <div className="text-gray-600 text-sm">Birth date:</div>
-                <div className="bg-gray-100 p-2 rounded-lg border-b-[3px] border-gray-300 text-sm">
-                  {user.birthDate === "" ? "---" : user.birthDate}
-                </div>
-              </div>
-              <div className="w-full flex flex-col gap-1">
                 <div className="text-gray-600 text-sm">Email:</div>
                 <div className="bg-gray-100 p-2 rounded-lg border-b-[3px] border-gray-300 text-sm">
                   {user.email === "---" ? "---" : user.email}
+                </div>
+              </div>
+              <div className="w-full flex flex-col gap-1">
+                <div className="text-gray-600 text-sm">Birth date:</div>
+                <div className="bg-gray-100 p-2 rounded-lg border-b-[3px] border-gray-300 text-sm">
+                  {user.birthDate === "" ? "---" : user.birthDate}
                 </div>
               </div>
             </div>

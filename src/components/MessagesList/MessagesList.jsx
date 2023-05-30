@@ -32,7 +32,7 @@ export default function MessagesList() {
 
   return (
     <Container>
-      <div className="w-full flex gap-10">
+      <div className="w-full flex gap-5">
         <div className="w-auto">
           <ul className="w-full bg-white p-5 flex flex-col justify-start items-start rounded-lg">
             <li className="w-full flex">
