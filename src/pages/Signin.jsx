@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BlogContext from "../context/BlogContext";
 import { useNavigate } from "react-router-dom";
 import SignNav from "../components/SignNav/SignNav";
 import SignForm from "../components/SignForm/SignForm";
 
 export default function Signin() {
-  const { signIn, setLoading } = useContext(BlogContext);
+  const { signIn, setLoading, user } = useContext(BlogContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);

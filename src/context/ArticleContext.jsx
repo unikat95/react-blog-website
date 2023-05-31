@@ -16,6 +16,7 @@ export function ArticleProvider({ children }) {
   const articlesCollectionRef = collection(db, "articles");
   const [modalSize, setModalSize] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const createArticle = async ({ articleData }) => {
     setLoading(true);
@@ -70,6 +71,8 @@ export function ArticleProvider({ children }) {
           setModalSize,
           isModalOpen,
           setIsModalOpen,
+          comments,
+          setComments,
         }}
       >
         {children}

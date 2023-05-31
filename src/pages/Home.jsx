@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "../components/Container/Container";
 import LatestArticles from "../components/LatestArticles/LatestArticles";
+import Articles from "./Articles";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
           <LatestArticles />
         </div>
       </div>
+      <Articles />
     </Container>
   );
 }
