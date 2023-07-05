@@ -7,6 +7,7 @@ import {
   AiFillCloseCircle,
 } from "react-icons/ai";
 import { FaCrown, FaReply } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
 
 import { v4 as uuidv4 } from "uuid";
 import { Tooltip } from "@material-tailwind/react";
@@ -179,9 +180,15 @@ export default function Comment({
               </div>
               <button disabled={!user} className="w-auto" onClick={handleLike}>
                 {isLikedByUser ? (
-                  <AiTwotoneLike size="20" className="text-blue-400" />
+                  <AiTwotoneLike
+                    size="20"
+                    className="text-blue-400 hover:text-blue-300"
+                  />
                 ) : (
-                  <AiOutlineLike size="20" className="text-slate-600" />
+                  <AiOutlineLike
+                    size="20"
+                    className="text-slate-600 hover:text-blue-400"
+                  />
                 )}
               </button>
             </div>
@@ -190,22 +197,18 @@ export default function Comment({
               {formattedDate}
             </div>
             <div className="w-[1px] h-[14px] bg-slate-300 block "></div>
-            <Tooltip
-              content={"replies"}
-              placement="bottom"
-              className="p-2 bg-zinc-200 text-black"
+
+            <button
+              onClick={handleToggleReply}
+              className="text-xs text-slate-600 font-medium flex justify-center items-center gap-0.5 hover:underline"
             >
-              <button
-                onClick={handleToggleReply}
-                className="text-xs text-slate-600 font-medium flex justify-center items-center gap-0.5"
-              >
-                <AiOutlineMessage
-                  size="20"
-                  className="text-slate-500 mb-[2px]"
-                />
-                <div>{replyCount} replies</div>
-              </button>
-            </Tooltip>
+              <AiOutlineMessage size="20" className="text-slate-500 mb-[2px]" />
+              <div>{replyCount} replies</div>
+              <IoIosArrowDown
+                size="14"
+                className={`${showReply && "rotate-180"} text-slate-600`}
+              />
+            </button>
           </div>
           <div>
             <button

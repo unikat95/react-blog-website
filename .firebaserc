@@ -1,4 +1,9 @@
 {
+  "projects": {
+    "blog-app": "blog-app-262df"
+  },
+  "targets": {},
+  "etags": {},
   "hosting": {
     "public": "public",
     "rewrites": [

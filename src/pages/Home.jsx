@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "../components/Container/Container";
 import LatestArticles from "../components/LatestArticles/LatestArticles";
-import Articles from "./Articles";
+import ArticlesList from "../components/ArticlesList/ArticlesList";
 
 export default function Home() {
   return (
@@ -14,7 +14,10 @@ export default function Home() {
           <LatestArticles />
         </div>
       </div>
-      <Articles />
+      <div className="flex flex-col gap-10 mt-20">
+        <h1 className="text-3xl font-medium text-slate-700">Other articles:</h1>
+        <ArticlesList />
+      </div>
     </Container>
   );
 }

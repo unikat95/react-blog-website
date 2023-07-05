@@ -33,20 +33,15 @@ export default function MessageItem({ msg, msgUser, toWhom }) {
             } flex justify-start items-center gap-2`}
           >
             <div>
-              <img
-                src={msgUser.picture}
-                alt=""
-                className="max-w-[1.75em] object-cover rounded-full"
-              />
               {msgUser.picture === "" ? (
-                <span className="w-[2em] h-[2em] bg-gray-500 flex justify-center items-center rounded-full uppercase text-white font-bold">
+                <span className="w-[1.75em] h-[1.75em] bg-gray-500 flex justify-center items-center rounded-full uppercase text-white font-bold">
                   {msgUser.email.slice(0, 1)}
                 </span>
               ) : (
                 <img
                   src={msgUser.picture}
                   alt=""
-                  className="w-[2em] h-[2em] rounded-full object-cover"
+                  className="w-[1.75em] h-[1.75em] rounded-full object-cover"
                 />
               )}
             </div>
