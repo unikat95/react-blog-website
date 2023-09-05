@@ -6,7 +6,6 @@ import BlogContext from "../../context/BlogContext";
 import Logo from "../Logo/Logo";
 import UserProfile from "../UserProfile/UserProfile";
 import { IoMdArrowDropdown } from "react-icons/io";
-import MessageContext from "../../context/MessageContext";
 
 export default function Navbar({ refNavbar }) {
   const { user, logout } = useContext(BlogContext);
